@@ -14,9 +14,9 @@ app.use(function(req, res, next) {
 //Create connection to db
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'admin',
-    password: 'lthinkingmovies',
-    database: 'andiclou_thinking_movies'
+    user: 'root',
+    password: '',
+    database: 'bucketlist'
 });
 
 db.connect((err) => {

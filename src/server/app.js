@@ -2,7 +2,6 @@ const express = require('express');
 const mysql = require('mysql');
 const PORT = process.env.PORT || 8080; //undefined || 8080
 const app = express();
-const resource = '';
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -14,9 +13,9 @@ app.use(function(req, res, next) {
 //Create connection to db
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'bucketlist'
+    user: 'andiclou_admin',
+    password: 'thinkingmovie',
+    database: 'andiclou_bucketlist'
 });
 
 db.connect((err) => {
@@ -24,29 +23,8 @@ db.connect((err) => {
     console.log("Connected!");
 });
 
-app.post(resource, (req, res) => {
-    let body = "";
-    req.on('data', function (chunk) {
-        if (chunk !== null) {
-            body += chunk;
-        }
-    });
-
-    req.on('end', () => {
-        let values = JSON.parse(body);
-        let sql = `INSERT INTO score(name, score) values ('${values.name}', ${values.score})`;
-        db.query(sql, (sqlErr, sqlRes) => {
-            if (sqlErr) {
-                res.status(404).send('There is some error here!');
-                throw err;
-            }
-            res.status(200).send(`${values.name}:${values.score} was stored in DB`);
-        });
-    });
-});
-
 app.get(resource, (req, res) => {
-    let sql = `SELECT * FROM score`;
+    let sql = `SELECT * FROM bucketlist`;
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.status(200).send(`${JSON.stringify(result)}`);
@@ -58,4 +36,24 @@ app.listen(PORT, (err) => {
     console.log("Listening to port", PORT);
 });
 
-// app.listen();
+// app.post(resource, (req, res) => {
+//     let body = "";
+//     req.on('data', function (chunk) {
+//         if (chunk !== null) {
+//             body += chunk;
+//         }
+//     });
+
+//     req.on('end', () => {
+//         let values = JSON.parse(body);
+//         // let sql = `INSERT INTO bucketlist(username, email) values ('${values.username}', ${values.email})`;
+//         let sql = `INSERT INTO bucketlist(username, email) values ('test', '123@gmail.com')`;
+//         db.query(sql, (sqlErr, sqlRes) => {
+//             if (sqlErr) {
+//                 res.status(404).send('There is some error here!');
+//                 throw err;
+//             }
+//             res.status(200).send(`info is stored in DB`);
+//         });
+//     });
+// });

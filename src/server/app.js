@@ -1,8 +1,16 @@
 const express = require('express');
-const mysql = require('mysql');
-const PORT = process.env.PORT || 8080; //undefined || 8080
+const PORT = process.env.PORT || 8080;
 const app = express();
-const resource = '';
+const bcrypt = require('bcrypt');
+
+const authController = require('./controllers/auth');
+
+const user = require('./models/user');
+const createToken = require('./modules/createToken');
+const decodeToken = require('./modules/decodeToken');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -11,22 +19,23 @@ app.use(function(req, res, next) {
     next();
 });
 
-//Create connection to db
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'bucketlist',
-});
+app.use('/admin', decodeToken);
+app.use('/user', decodeToken);
 
-db.connect((err) => {
-    if (err) throw err;
-    console.log("Connected!");
-});
+app.post('/adminLogin', authController.adminLogin);
+app.post('/userLogin', authController.userLogin);
+app.post('/register', authController.register);
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  const statusCode = err.code && (err.code >= 100 && err.code < 600) ? err.code : 400;
+  res.status(statusCode)
+     .json({
+       message: err.message
+     });
+})
 
 app.listen(PORT, (err) => {
     if (err) throw err;
-    console.log("Listening to port", PORT);
+    console.log("listening to port", PORT);
 });
-
-// // app.listen();

@@ -1,10 +1,31 @@
 const xhttp = new XMLHttpRequest();
-const resource = '/API/v1/bucketlist';
-const endPointRoot = 'http://localhost:8080';
+const resource = '/API/v1/bucketlists';
+const endPointRoot = 'http://localhost:3306';
 
-const xhttp = new XMLHttpRequest();
-const domainRoot = 'https://andicloud32.com';
-const resource = '/API/V1/';
+// http://localhost:3306/API/v1/bucketlist
+
+const notesContainer = document.getElementById("container");
+const addNoteBtn = notesContainer.querySelector(".add-note");
+
+function saveNotes(notes) {
+
+}
+
+function createNoteElement(id, content) {
+
+}
+
+function addNote() {
+
+}
+
+function updateNote(id, newContent) {
+
+}
+
+function deleteNote(id, element) {
+    
+}
 
 function post() {
     let paramsJson = {'username': 'andi', 'email': '123@gmail.com'};
@@ -19,17 +40,17 @@ function post() {
     };
 }
 
-function get() {
+function getNotes() {
     xhttp.open("GET", endPointRoot+resource, true);
     xhttp.send();
     xhttp.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
-            let info = JSON.parse(this.responseText); 
-            info.forEach(obj => {
-                document.getElementById('msg').innerHTML = this.responseText;
+            let itemList = JSON.parse(this.responseText); 
+            itemList.forEach(obj => {
+                document.getElementById('msg').innerHTML += `<li style="list-style-type: none;">${obj.name}:${obj.score}</li>`;
             })
         }
     };
 }
 window.onload = get();
-window.onload = post();
+// window.onload = post();

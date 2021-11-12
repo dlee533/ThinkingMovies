@@ -1,0 +1,81 @@
+/* .textfield {
+    width: 200px;
+} */
+
+button:hover {
+    cursor: pointer;
+} 
+
+/* checkbox {
+    padding-left: 100px;
+} */
+
+form {
+    border-style: solid;
+    border-radius: 15px;
+    border-width: 1px;
+    padding: 30px;
+    border-color: cadetblue;
+    margin: 10px;
+}
+
+.btn-primary {
+    background-color: cadetblue;
+    border-color: cadetblue;
+}
+
+.btn-primary:hover {
+    background-color: white;
+    color:cadetblue;
+    border-color: cadetblue;
+}
+
+#checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+/* .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #D7B1D7 !important;
+    background-color: #D7B1D7 !important;
+  } */
+
+#container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    padding: 24px;
+    gap: 24px;
+}
+
+.note {
+    height: 200px;
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 15px;
+    box-shadow: 0 0 7px (0,0,0,0.15);
+    resize: none;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+.add-note {
+    height: 200px;
+    outline: none;
+    background: (0,0,0,0.1);
+    border-radius: 15px;
+    font-size: 100px;
+    color: (0,0,0,0.5);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.add-note:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+.textbox{
+    border-radius: 0px;
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+}

@@ -1,0 +1,75 @@
+button:hover {
+    cursor: pointer;
+} 
+
+form {
+    border-style: solid;
+    border-radius: 15px;
+    border-width: 1px;
+    padding: 30px;
+    border-color: cadetblue;
+    margin: 10px;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: cadetblue;
+    border-color: cadetblue;
+}
+
+.btn-primary:hover {
+    background-color: white;
+    color:cadetblue;
+    border-color: cadetblue;
+}
+
+#checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+#container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    padding: 24px;
+    gap: 24px;
+}
+
+.note {
+    height: 200px;
+    box-sizing: border-box;
+    padding: 16px;
+    border-color: cadetblue;
+    border-radius: 15px;
+    box-shadow: 0 0 7px (0,0,0,0.15);
+    resize: none;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+.note:hover {
+
+}
+
+.add-note {
+    height: 200px;
+    outline: none;
+    border-radius: 15px;
+    background: (0,0,0,0.1);
+    border-color: cadetblue;
+    font-size: 80px;
+    color: (0,0,0,0.5);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.add-note:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+.textbox{
+    border-radius: 0px;
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+}

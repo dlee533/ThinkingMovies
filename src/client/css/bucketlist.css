@@ -1,14 +1,6 @@
-/* .textfield {
-    width: 200px;
-} */
-
 button:hover {
     cursor: pointer;
 } 
-
-/* checkbox {
-    padding-left: 100px;
-} */
 
 form {
     border-style: solid;
@@ -17,6 +9,7 @@ form {
     padding: 30px;
     border-color: cadetblue;
     margin: 10px;
+    display: inline-block;
 }
 
 .btn-primary {
@@ -35,11 +28,6 @@ form {
     height: 20px;
 }
 
-/* .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-    border-color: #D7B1D7 !important;
-    background-color: #D7B1D7 !important;
-  } */
-
 #container {
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
@@ -51,6 +39,7 @@ form {
     height: 200px;
     box-sizing: border-box;
     padding: 16px;
+    border-color: cadetblue;
     border-radius: 15px;
     box-shadow: 0 0 7px (0,0,0,0.15);
     resize: none;
@@ -58,12 +47,17 @@ form {
     font-size: 16px;
 }
 
+.note:hover {
+
+}
+
 .add-note {
     height: 200px;
     outline: none;
-    background: (0,0,0,0.1);
     border-radius: 15px;
-    font-size: 100px;
+    background: (0,0,0,0.1);
+    border-color: cadetblue;
+    font-size: 80px;
     color: (0,0,0,0.5);
     cursor: pointer;
     transition: background 0.2s;

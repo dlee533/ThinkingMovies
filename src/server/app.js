@@ -41,7 +41,7 @@ app.get(resource +'/bucketlists', (req, res) => {
 });
 
 app.get(resource + '/movielists', (req, res) => {
-    //let sql = `SELECT * FROM bucketlist`;
+    let sql = `SELECT * FROM bucketlist`;
     db.query(sql, (err, result) => {
         if (err) {
             console.log(err);
@@ -67,7 +67,7 @@ app.post(resource, (req, res) => {
     req.on('end', () => {
         let values = JSON.parse(body);
         // let sql = `INSERT INTO bucketlist(username, email) values ('${values.username}', ${values.email})`;
-        let sql = `INSERT INTO bucketlist(username, email) values ('test', '123@gmail.com')`;
+        // let sql = `INSERT INTO bucketlist(username, email) values ('test', '123@gmail.com')`;
         db.query(sql, (sqlErr, sqlRes) => {
             if (sqlErr) {
                 res.status(404).send('There is some error here!');

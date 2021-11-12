@@ -20,8 +20,16 @@
             <input type="text" class="textbox form-control" id="bucklistTitle" placeholder="Title">
         </div>
         <div class="form-inline form-group">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search Movie" aria-label="Search">
+            <input id="searchMovieBox" class="form-control mr-sm-2" type="search" placeholder="Search Movie" aria-label="Search">
+            <!-- @todo how do i make the search bar longer ..? -->
             <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+        </div>
+        <div class="form-inline form-group">
+            <!--Have to render this block dynamically in bucketlist.js-->
+            <input id='checkbox' class="form-control mr-sm-2 " type="checkbox">
+            <input type="text" class="textbox form-control mr-sm-2" id="movieTitle" placeholder="Enter a Movie Name...">
+            <button class="btn btn-outline-success mr-sm-2" type="button">Add</button>
+            <button class="btn btn-outline-danger" type="button">Remove</button>
         </div>
         <div class="form-inline form-group">
             <input id='checkbox' class="form-control mr-sm-2 " type="checkbox">
@@ -29,7 +37,12 @@
             <button class="btn btn-outline-success mr-sm-2" type="button">Add</button>
             <button class="btn btn-outline-danger" type="button">Remove</button>
         </div>
-        
+        <div class="form-inline form-group">
+            <input id='checkbox' class="form-control mr-sm-2 " type="checkbox">
+            <input type="text" class="textbox form-control mr-sm-2" id="movieTitle" placeholder="Enter a Movie Name...">
+            <button class="btn btn-outline-success mr-sm-2" type="button">Add</button>
+            <button class="btn btn-outline-danger" type="button">Remove</button>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     </div>

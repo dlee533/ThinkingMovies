@@ -7,27 +7,37 @@ const resource = '/API/v1';
 const db = require('./modules/db');
 
 const authController = require('./controllers/auth');
+const adminController = require('./controllers/admin');
 
 const user = require('./models/user');
 const createToken = require('./modules/createToken');
 const decodeToken = require('./modules/decodeToken');
 const errorHandler = require('./modules/errorHandler');
+const recordStats = require('./modules/recordStats');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(function(req, res, next) {
-    console.log(`Request: ${req.method}, ${req.path}`);
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-    next();
+
+    // TODO: after deploying the program, set the access-control-allow-origin to exact value and replace below lines with next();
+    if (req.method == "OPTIONS") res.status(200).send();
+    else next();
 });
 
+// middleware to record every stats
+app.use(recordStats);
+
+// middleware to check Authorization token passed in header
 app.use(resource + '/admin', decodeToken);
 app.use(resource + '/user', decodeToken);
 
 app.post(resource + '/adminLogin', authController.adminLogin);
+app.get(resource + '/admin/stats', adminController.getStats);
+
 app.post(resource + '/userLogin', authController.userLogin);
 app.post(resource + '/register', authController.register);
 

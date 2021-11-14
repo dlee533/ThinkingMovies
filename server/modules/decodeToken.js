@@ -5,7 +5,6 @@ const user = require('../models/user');
 const authMiddleware = (req, res, next) => {
   let token = req.headers.authorization;
   token = (typeof(token) === 'string' && token.split(' ')[0] === 'Bearer') ? token.split(' ')[1] : null;
-
   if (!token) {
     return res.status(403).json({
       success: false,

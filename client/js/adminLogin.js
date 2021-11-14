@@ -20,7 +20,7 @@ const loginHandler = (e) => {
           const res = JSON.parse(xhttp.responseText);
           window.localStorage.setItem("adminToken", res.token);
           alert(`${res.message}`);
-          // window.location.href = ""; // TODO: redirect to landing page
+          window.location.href = "./adminPage.html"; 
       } else if (xhttp.readyState == 4) {
           message.textContent  = `Error: ${JSON.parse(xhttp.responseText).message}`;
       }

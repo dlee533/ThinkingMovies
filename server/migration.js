@@ -36,6 +36,13 @@ const queryList = [
    bucketlist_id int(11),\
    PRIMARY KEY(id),\
    FOREIGN KEY (bucketlist_id) REFERENCES bucketlist(id))",
+   "DROP TABLE IF EXISTS stats",
+   "CREATE TABLE stats (\
+   id int(11) AUTO_INCREMENT,\
+   method varchar(255),\
+   endpoint varchar(255),\
+   count int(11) DEFAULT 0,\
+   PRIMARY KEY(id))"
 ]
 
 for (let i = 0; i < queryList.length; i++) {

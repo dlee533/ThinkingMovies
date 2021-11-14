@@ -1,5 +1,5 @@
 const xhttp = new XMLHttpRequest();
-const endPointRoot = 'http://localhost:8080';
+const endPointRoot = 'http://localhost:8080/API/v1';
 const resource="/userlogin";
 
 const email = document.getElementById('email');

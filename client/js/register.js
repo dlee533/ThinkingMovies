@@ -1,5 +1,5 @@
 const resource="/register";
-const endPointRoot = 'http://localhost:8080';
+const endPointRoot = 'http://localhost:8080/API/v1';
 
 const username = document.getElementById('username');
 const email = document.getElementById('email');

@@ -24,20 +24,12 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.use('/admin', decodeToken);
-app.use('/user', decodeToken);
+app.use(resource + '/admin', decodeToken);
+app.use(resource + '/user', decodeToken);
 
-app.post('/adminLogin', authController.adminLogin);
-app.post('/userLogin', authController.userLogin);
-app.post('/register', authController.register);
-
-app.use(errorHandler);
-
-app.listen(PORT, (err) => {
-    if (err) throw err;
-    console.log("listening to port", PORT);
-});
-
+app.post(resource + '/adminLogin', authController.adminLogin);
+app.post(resource + '/userLogin', authController.userLogin);
+app.post(resource + '/register', authController.register);
 
 app.get(resource +'/bucketlists', (req, res) => {
   let sql = `SELECT * FROM bucketlist`;
@@ -81,4 +73,11 @@ app.post(resource, (req, res) => {
           res.status(200).send(`info is stored in DB`);
       });
   });
+});
+
+app.use(errorHandler);
+
+app.listen(PORT, (err) => {
+    if (err) throw err;
+    console.log("listening to port", PORT);
 });

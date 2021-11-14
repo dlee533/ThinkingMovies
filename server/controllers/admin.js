@@ -1,11 +1,13 @@
-const stats = require('../models/stats');
+const db = require('../modules/db');
 
 exports.getStats = (req, res, next) => {
+  const sql = `SELECT * FROM stats`;
+
   const respond = (result) => {
     res.json({stats: result});
   }
 
-  stats.getAllStats()
-       .then(respond)
-       .catch(next)
+  db.promise(sql)
+    .then(respond)
+    .catch(next);
 }

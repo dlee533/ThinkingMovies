@@ -13,4 +13,13 @@ db.connect((err) => {
     console.log("connected to mysql");
 });
 
+db.promise = (sql) => {
+  return new Promise((res, rej) => {
+    db.query(sql, (err, result) => {
+      if (err) rej(err);
+      else res(result);
+    })
+  })
+}
+
 module.exports = db;

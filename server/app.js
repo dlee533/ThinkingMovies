@@ -9,7 +9,6 @@ const db = require('./modules/db');
 const authController = require('./controllers/auth');
 const adminController = require('./controllers/admin');
 
-const user = require('./models/user');
 const createToken = require('./modules/createToken');
 const decodeToken = require('./modules/decodeToken');
 const errorHandler = require('./modules/errorHandler');

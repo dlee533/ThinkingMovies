@@ -15,32 +15,8 @@ const errorHandler = require('./modules/errorHandler');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-<<<<<<< HEAD
 app.use(function(req, res, next) {
     console.log(`Request: ${req.method}, ${req.path}`);
-=======
-//Create connection to db
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "bucketlist"
-});
-
-// host: "quebec.gendns.com",
-//     user: "andiclou_admin",
-//     password: "movie123",
-//     database: "andiclou_thinking_movies"
-
-
-db.connect((err) => {
-  if (err) throw err;
-  console.log("Connected!");
-});
-
-
-app.use((req, res, next) => {
->>>>>>> 89df77ae9a6b9f65af02d67692ad3dde0c8a7307
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');

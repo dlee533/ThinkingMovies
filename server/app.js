@@ -4,6 +4,7 @@ const app = express();
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const resource = '/API/v1';
+const db = require('./modules/db');
 
 const authController = require('./controllers/auth');
 

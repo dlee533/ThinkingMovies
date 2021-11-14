@@ -1,16 +1,9 @@
-const conn = require('./modules/db');
-const { createAdmin } = require('./models/user');
-const { encryptPassword } = require('./modules/password');
-//
-// user:
-// id, username, email, password
-//
-// bucketlist:
-// id, user_id, name
-//
-// bucketItems:
-// id, bucketlist_id, name
+const db = require('./modules/db');
+// const { createAdmin } = require('./models/user');
+// const { encryptPassword } = require('./modules/password');
 
+const bcrypt = require('bcrypt');
+const SALT_WORK_FACTOR = 10;
 
 const queryList = [
   "DROP TABLE IF EXISTS bucketItem",
@@ -46,22 +39,24 @@ const queryList = [
 ]
 
 for (let i = 0; i < queryList.length; i++) {
-  conn.query(queryList[i], (err, res) => {
+  db.query(queryList[i], (err, res) => {
     if (err) throw err;
     console.log(res);
   })
 }
 
-const getAdminInfo = async () => {
+const getAdminInfoSQL = async () => {
   const admin  = {
       username: "admin",
       email: "admin",
-      password: await encryptPassword('1234abcd'),
+      password: await bcrypt.hash("1234abcd", SALT_WORK_FACTOR),
       isAdmin: true
   }
-  return admin;
+  return `INSERT INTO user(username,email,password,isAdmin) VALUE("${admin.username}", "${admin.email}", "${admin.password}", ${admin.isAdmin})`;
 }
 
-getAdminInfo().then(createAdmin)
-              .then(console.log)
-              .catch(console.log);
+
+
+getAdminInfoSQL().then(db.promise)
+                 .then(console.log)
+                 .catch(console.log);

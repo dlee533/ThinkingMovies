@@ -32,11 +32,11 @@ app.use(function(req, res, next) {
 app.use(recordStats);
 
 // middleware to check Authorization token passed in header
-app.use(resource + '/admin', decodeToken);
-app.use(resource + '/user', decodeToken);
+app.use(resource + '/admins', decodeToken);
+app.use(resource + '/users', decodeToken);
 
 app.post(resource + '/adminLogin', authController.adminLogin);
-app.get(resource + '/admin/stats', adminController.getStats);
+app.get(resource + '/admins/stats', adminController.getStats);
 
 app.post(resource + '/userLogin', authController.userLogin);
 app.post(resource + '/register', authController.register);

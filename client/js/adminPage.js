@@ -1,5 +1,5 @@
 const endPointRoot = 'http://localhost:8080/API/v1';
-const resource="/admin/stats";
+const resource="/admins/stats";
 const emptyTableMessage = "no stats data";
 
 const table = document.getElementById('stats-table');

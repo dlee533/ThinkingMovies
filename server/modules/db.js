@@ -6,11 +6,20 @@ const db = mysql.createConnection({
     user: 'root',
     password: '',
     database: 'bucketlist',
+    multipleStatements: true,
 });
+
+// online database credentials
+/*
+    host: "quebec.gendns.com",
+    user: "andiclou_admin",
+    password: "movie123",
+    database: "andiclou_thinking_movies"
+*/
 
 db.connect((err) => {
     if (err) throw err;
-    console.log("connected to mysql");
+    console.log("Connected to mysql");
 });
 
 module.exports = db;

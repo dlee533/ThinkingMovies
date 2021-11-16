@@ -30,6 +30,7 @@ const loadStats = () => {
           }
       } else if (xhttp.readyState == 4) {
           console.log(`Error: ${JSON.parse(xhttp.responseText).message}`);
+          alert(`Error: ${JSON.parse(xhttp.responseText).message}`)
       }
   };
 }

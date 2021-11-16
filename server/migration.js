@@ -1,14 +1,14 @@
 const db = require('./modules/db');
-// const { createAdmin } = require('./models/user');
-// const { encryptPassword } = require('./modules/password');
-const IMDB_API_KEY = "k_4qjud0hd";
 
+const IMDB_API_KEY = "k_4qjud0hd";
 const axios = require('axios');
 const mostPopularMovieEndpoint = "https://imdb-api.com/en/API/MostPopularMovies/";
 
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
 
+//**********************************************************************************************************
+// create tables
 const queryList = [
   "DROP TABLE IF EXISTS bucketItem",
   "DROP TABLE IF EXISTS bucketlist",
@@ -57,6 +57,8 @@ for (let i = 0; i < queryList.length; i++) {
   })
 }
 
+//**********************************************************************************************************
+// create admin credential
 const getAdminInfoSQL = async () => {
   const admin  = {
       username: "admin",
@@ -73,7 +75,8 @@ getAdminInfoSQL().then(db.promise)
                  .then(console.log)
                  .catch(console.log);
 
-
+//**********************************************************************************************************
+// populate filmItem table w/ imdb api
 axios.get(`${mostPopularMovieEndpoint}${IMDB_API_KEY}`)
      .then((res) => {
        res.data.items.forEach((item, i) => {

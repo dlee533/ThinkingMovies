@@ -3,7 +3,7 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
-const resource = '/v1/users/bucketlists';
+const resource = '/v1/users';
 const db = require('./modules/db');
 
 const authController = require('./controllers/auth');
@@ -17,24 +17,10 @@ app.use(express.urlencoded({
   extended: false
 }));
 
-//Create connection to db
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "bucketlist"
-// });
-
 // host: "quebec.gendns.com",
 //     user: "andiclou_admin",
 //     password: "movie123",
 //     database: "andiclou_thinking_movies"
-
-//connect to DB
-// db.connect((err) => {
-//   if (err) throw err;
-//   console.log("Connected!");
-// });
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -59,10 +45,10 @@ app.use((err, req, res, next) => {
     });
 })
 
-//Get bucketlist and bucketitems from DB
-app.get(resource, (req, res) => {
-  // const sql = 'SELECT * FROM bucketlist';
-  // const sql2 = 'SELECT * FROM bucketitem, bucketlist WHERE bucketlist_id IN (SELECT id FROM bucketlist)';
+/**
+ * Get both bucketlist and bucketitems from DB
+ */
+app.get(resource + '/buckets', (req, res) => {
   const sql = [
     'SELECT * FROM bucketlist',
     'SELECT * FROM bucketitem WHERE bucketlist_id IN (SELECT id FROM bucketlist)'
@@ -74,30 +60,137 @@ app.get(resource, (req, res) => {
     }
     res.status(200).send(`${JSON.stringify(result)}`);
   });
-});
+})
 
-// app.post(resource, (req, res) => {
-//   let body = "";
-//   req.on('data', function (chunk) {
-//       if (chunk !== null) {
-//           body += chunk;
-//       }
-//   });
+/**
+ * Add a bucket item
+ */
+app.post(resource + '/buckets/:bucket_id/items', (req, res) => {
+  let body = "";
+  req.on('data', function (chunk) {
+      if (chunk !== null) {
+          body += chunk;
+      }
+  });
+ 
+  req.on('end', () => {
+    //@todo change hardcoded bucketlist_id
+      let user_input = JSON.parse(body);
+      let sql = `INSERT INTO bucketitem(name, bucketlist_id) values ('${user_input.name}', 2)`;
+      db.query(sql, (sqlErr, sqlRes) => { 
+          if (sqlErr) {
+              res.status(404).send('There is some error here!');
+              throw err;
+          }
+          res.status(200).send(`${user_input.name} is stored into bucketitem table`);
+      });
+  });
+})
 
-//   req.on('end', () => {
-//       let values = JSON.parse(body);
-//       let sql = `INSERT INTO bucketlist(name, user_id) values ('${values.name}', ${values.user_Id})`;
-//       db.query(sql, (sqlErr, sqlRes) => {
-//           if (sqlErr) {
-//               res.status(404).send('There is some error here!');
-//               throw err;
-//           }
-//           res.status(200).send(`Bucketlist No.${values.id} is stored in DB`);
-//       });
-//   });
-// });
+/**
+ * Add a bucketlist
+ */
+ app.post(resource+'/buckets', (req, res) => {
+  let body = "";
+  req.on('data', function (chunk) {
+      if (chunk !== null) {
+          body += chunk;
+      }
+  });
+
+  req.on('end', () => {
+    //@todo change hardcoded user_id
+      let user_input = JSON.parse(body);
+      let sql = `INSERT INTO bucketlist(name, user_id) values ('${user_input.name}', 1)`;
+      db.query(sql, (sqlErr, sqlRes) => { 
+          if (sqlErr) {
+              res.status(404).send('There is some error here!');
+              throw err;
+          }
+          res.status(200).send(`${user_input.name} is stored into bucketlist table`);
+      });
+  });
+})
+
+/**
+ * Update bucket item
+ */
+app.put(resource + '/buckets/:bucket_id/items/:item_id', (req, res) => {
+  let body = "";
+  req.on('data', function (chunk) {
+      if (chunk !== null) {
+          body += chunk;
+      }
+  });
+ 
+  req.on('end', () => {
+    //@todo change hardcoded bucketlist_id
+      let user_input = JSON.parse(body);
+      let sql = `UPDATE bucketitem\ SET name=${user_input.name}\ WHERE bucketlist_id=2`;
+      db.query(sql, (sqlErr, sqlRes) => { 
+          if (sqlErr) {
+              res.status(404).send('There is some error here!');
+              throw err;
+          }
+          res.status(200).send(`${user_input.name} is stored into bucketitem table`);
+      });
+  });
+})
+
+/**
+ * Update bucket LIST
+ */
+ app.put(resource + '/buckets/:bucket_id', (req, res) => {
+  let body = "";
+  req.on('data', function (chunk) {
+      if (chunk !== null) {
+          body += chunk;
+      }
+  });
+ 
+  req.on('end', () => {
+    //@todo change hardcoded bucketlist_id
+      let user_input = JSON.parse(body);
+      let sql = `UPDATE bucketlist\ SET name=${user_input.name}\ WHERE user_id=1`;
+      db.query(sql, (sqlErr, sqlRes) => { 
+          if (sqlErr) {
+              res.status(404).send('There is some error here!');
+              throw err;
+          }
+          res.status(200).send(`${user_input.name} is stored into bucketitem table`);
+      });
+  });
+})
+
+/**
+ * Delete a bucket item
+ */
+ app.delete(resource + '/buckets/:bucketlist_id/items/:bucket_item', (req, res) => {
+  const sql = `DELETE FROM bucketitem WHERE id = something`;
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    res.status(200).send(`${JSON.stringify(result)}`);
+  });
+})
+
+/**
+ * Delete a bucket LIST
+ */
+ app.delete(resource + '/buckets/:bucketlist_id', (req, res) => {
+  const sql = `DELETE FROM bucketlist WHERE id = something`;
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    res.status(200).send(`${JSON.stringify(result)}`);
+  });
+})
 
 app.listen(PORT, (err) => {
   if (err) throw err;
   console.log("listening to port", PORT);
-});
+})

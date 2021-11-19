@@ -8,6 +8,7 @@ const db = require('./modules/db');
 
 const authController = require('./controllers/auth');
 const adminController = require('./controllers/admin');
+const movieController = require('./controllers/movie');
 
 const createToken = require('./modules/createToken');
 const decodeToken = require('./modules/decodeToken');
@@ -39,6 +40,11 @@ app.get(resource + '/admins/stats', adminController.getStats);
 
 app.post(resource + '/userLogin', authController.userLogin);
 app.post(resource + '/register', authController.register);
+
+app.get(resource + '/movies', movieController.getAllMovies);
+
+app.post(resource + '/users/:uid/bucketlist/:bid', movieController.addMovies);
+
 
 app.get(resource +'/bucketlists', (req, res) => {
   let sql = `SELECT * FROM bucketlist`;

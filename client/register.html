@@ -3,9 +3,46 @@
   <head>
     <meta charset="utf-8">
     <title>Register</title>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--FontAwesome-->
+    <link href="../client/node_modules/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet"/>
+    <!--Page styling-->
+    <link href="../client/css/style.css" rel="stylesheet" />
   </head>
   <body>
     <div>
+      <!--Navbar start-->
+      <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="./index.html"><i class="fas fa-home"></i></a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link mx-4" href="./adminLogin.html">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-4" href="./userLogin.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-4" href="./register.html">Register</a>
+                </li>
+            </ul>
+        </div>
+      </nav>
+    <!--Navbar end-->
+    <div class="auth-layout">
+      <h2>Register</h2>
       <form id="form">
         <label for="username">Username:</label><br />
         <input type="text" id="username" name="username"><br />
@@ -16,9 +53,12 @@
         <label for="password">Password:</label><br />
         <input type="text" id="password" name="password"><br />
 
-        <button type="submit">Register</button>
+        <div>
+          <button type="submit">Register</button>
+        </div>
       </form>
       <span id="message"></span>
+    </div>
     </div>
     <script src="js/register.js"></script>
   </body>

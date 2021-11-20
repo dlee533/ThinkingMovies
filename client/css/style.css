@@ -162,4 +162,18 @@ body {
         font-size: 1.6vh;
     }
 }
+
+@media (max-width: 925px) and (min-width: 768px) {
+    .admin-content {
+        max-width: 80%;
+        width: 70%;
+        height: 80%;
+        min-height: 50%;
+        font-size: 1.8vh;
+    }
+
+    .admin-content h1 {
+      font-size: 3vh;
+    }
+}
 /* Admin page content end */

@@ -1,22 +1,28 @@
+html, body{
+    height: 100%;
+}
+
 .scrollable {
-  /* overflow-y: scroll; */
-  height: 70%;
+  overflow-y: scroll;
 }
 
 .movieList {
+  height: 70vh;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;;
+  justify-content: space-around;
 }
 
 .movieItem {
-  width: 150px;;
-  height: 250px;
+  width: 150px;
+  height: 220px;
   padding: 15px;
+  margin: 15px;
   position: relative;
   display: flex;
   align-items: flex-end;
   transition: .5s ease-out;
+  margin: 2vh;
 }
 
 .movieItem:hover .movieImage {
@@ -28,6 +34,10 @@
   opacity: 1;
   transition: .5s ease-out;
   background-color: black;
+}
+
+.clicked .movieImage {
+  -webkit-filter: brightness(50%);
 }
 
 .overlay {
@@ -58,12 +68,60 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  width: 100%;
+  height: 10vh;
 }
 
 .row .right {
   justify-content: flex-start;
+  margin: 5%;
 }
 
 .row .left {
   justify-content: flex-end;
+  margin: 5%;
+}
+
+@media (max-width: 767.98px) {
+  .movieList {
+    position: fixed;
+    height: 65%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 15px;
+  }
+  .movieItem {
+    min-width: 15%;
+    width: 25%;
+    min-height: 20%;
+    height: 32%;
+    margin: 1vh;
+    margin-top: 5vh;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    bottom: 5%;
+    width: 100%;
+    position: absolute;
+  }
+  .row .right {
+    margin: 1%;
+  }
+  .row .left {
+    margin: 1%;
+  }
+  .overlayText {
+    color: white;
+    font-size: 2vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
 }

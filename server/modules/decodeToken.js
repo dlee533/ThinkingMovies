@@ -1,11 +1,10 @@
 const jwt = require('jsonwebtoken');
 const SECRET = "secret";
-const user = require('../models/user');
+const db = require('./db');
 
 const authMiddleware = (req, res, next) => {
   let token = req.headers.authorization;
   token = (typeof(token) === 'string' && token.split(' ')[0] === 'Bearer') ? token.split(' ')[1] : null;
-
   if (!token) {
     return res.status(403).json({
       success: false,
@@ -28,6 +27,11 @@ const authMiddleware = (req, res, next) => {
     return decoded
   }
 
+  const getUser = (decoded) => {
+    const sql =  `SELECT * FROM user WHERE email = "${decoded.email}"`;
+    return db.promise(sql);
+  }
+
   const checkUserType = (userInfo) => {
     if ((req.originalUrl.includes('/user/') && userInfo.isAdmin) ||
         (req.originalUrl.includes('/admin/') && !userInfo.isAdmin)) {
@@ -43,7 +47,7 @@ const authMiddleware = (req, res, next) => {
   }
 
   verifyToken().then(setDecoded)
-               .then(user.findUserByEmail)
+               .then(getUser)
                .then(checkUserType)
                .then(next)
                .catch(onError);

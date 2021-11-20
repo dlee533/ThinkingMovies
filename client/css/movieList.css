@@ -1,0 +1,69 @@
+.scrollable {
+  /* overflow-y: scroll; */
+  height: 70%;
+}
+
+.movieList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;;
+}
+
+.movieItem {
+  width: 150px;;
+  height: 250px;
+  padding: 15px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  transition: .5s ease-out;
+}
+
+.movieItem:hover .movieImage {
+  -webkit-filter: brightness(50%);
+}
+
+
+.movieItem:hover .overlay {
+  opacity: 1;
+  transition: .5s ease-out;
+  background-color: black;
+}
+
+.overlay {
+  opacity: 0;
+}
+
+.movieImage {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+.overlayText {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.row .right {
+  justify-content: flex-start;
+}
+
+.row .left {
+  justify-content: flex-end;
+}

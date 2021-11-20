@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Login - Thinking Movies</title>
+   <!--Bootstrap-->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <!--FontAwesome-->
+   <link href="../client/node_modules/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet"/>
+   <!--Page styling-->
+   <link href="../client/css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div>
+    <!--Navbar start-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="./index.html"><i class="fas fa-home"></i></a>
+      <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+      >
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link mx-4" href="./adminLogin.html">Admin</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link mx-4" href="./userLogin.html">Login</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link mx-4" href="./register.html">Register</a>
+              </li>
+          </ul>
+      </div>
+    </nav>
+  <!--Navbar end-->
+  <div class="auth-layout">
+    <h2>Login</h2>
+    <form id="form">
+      <label for="email">Email:</label><br />
+      <input type="text" id="email" name="email"><br/>
+
+      <label for="password">Password:</label><br/>
+      <input type="text" id="password" name="password"><br/>
+
+      <div>
+        <button type="submit">Login</button>
+      </div>
+    </form>
+    <span id="message"></span>
+  </div>
+  </div>
+  <script src="js/userLogin.js"></script>
+</body>
+</html>

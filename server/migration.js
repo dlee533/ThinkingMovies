@@ -1,21 +1,25 @@
-const conn = require('./modules/db');
-const { createAdmin } = require('./models/user');
-const { encryptPassword } = require('./modules/password');
-//
-// user:
-// id, username, email, password
-//
-// bucketlist:
-// id, user_id, name
-//
-// bucketItems:
-// id, bucketlist_id, name 
+const db = require('./modules/db');
 
+const IMDB_API_KEY = "k_4qjud0hd";
+const axios = require('axios');
+const mostPopularMovieEndpoint = "https://imdb-api.com/en/API/MostPopularMovies/";
 
+const bcrypt = require('bcrypt');
+const SALT_WORK_FACTOR = 10;
+
+//**********************************************************************************************************
+// create tables
 const queryList = [
   "DROP TABLE IF EXISTS bucketItem",
   "DROP TABLE IF EXISTS bucketlist",
   "DROP TABLE IF EXISTS user",
+  "DROP TABLE IF EXISTS filmItem",
+  "CREATE TABLE filmItem (\
+   id int(11) AUTO_INCREMENT,\
+   title varchar(255),\
+   year int(11),\
+   image varchar(255),\
+   PRIMARY KEY(id))",
   "CREATE TABLE user (\
    id int(11) AUTO_INCREMENT,\
    username varchar(255),\
@@ -32,29 +36,54 @@ const queryList = [
    FOREIGN KEY (user_id) REFERENCES user(id))",
   "CREATE TABLE bucketItem (\
    id int(11) AUTO_INCREMENT,\
-   name varchar(255),\
    bucketlist_id int(11),\
+   item_id int(11),\
    PRIMARY KEY(id),\
-   FOREIGN KEY (bucketlist_id) REFERENCES bucketlist(id))",
+   FOREIGN KEY (bucketlist_id) REFERENCES bucketlist(id),\
+   FOREIGN KEY (item_id) REFERENCES filmItem(id))",
+   "DROP TABLE IF EXISTS stats",
+   "CREATE TABLE stats (\
+   id int(11) AUTO_INCREMENT,\
+   method varchar(255),\
+   endpoint varchar(255),\
+   count int(11) DEFAULT 0,\
+   PRIMARY KEY(id))"
 ]
 
 for (let i = 0; i < queryList.length; i++) {
-  conn.query(queryList[i], (err, res) => {
+  db.query(queryList[i], (err, res) => {
     if (err) throw err;
     console.log(res);
   })
 }
 
-const getAdminInfo = async () => {
+//**********************************************************************************************************
+// create admin credential
+const getAdminInfoSQL = async () => {
   const admin  = {
       username: "admin",
       email: "admin",
-      password: await encryptPassword('1234abcd'),
+      password: await bcrypt.hash("1234abcd", SALT_WORK_FACTOR),
       isAdmin: true
   }
-  return admin;
+  return `INSERT INTO user(username,email,password,isAdmin) VALUE("${admin.username}", "${admin.email}", "${admin.password}", ${admin.isAdmin})`;
 }
 
-getAdminInfo().then(createAdmin)
-              .then(console.log)
-              .catch(console.log);
+
+
+getAdminInfoSQL().then(db.promise)
+                 .then(console.log)
+                 .catch(console.log);
+
+//**********************************************************************************************************
+// populate filmItem table w/ imdb api
+axios.get(`${mostPopularMovieEndpoint}${IMDB_API_KEY}`)
+     .then((res) => {
+       res.data.items.forEach((item, i) => {
+         const sql = `INSERT INTO filmItem(title, year, image) VALUES("${item.title}", "${item.year}", "${item.image}")`;
+         db.promise(sql).then(console.log).catch(console.log);
+       });
+     })
+     .catch((error) => {
+       console.log(error);
+     })

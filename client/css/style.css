@@ -4,11 +4,12 @@ body, html {
 }
 
 body {
-    padding-top: 60px;
-    background: url("../images/background.png") center no-repeat;
+    padding-top: 110px;
+    background: url("../images/background.png") center repeat-y;
     background-position: center;
     height: 100%;
     background-size: cover;
+    display: grid;
 }
 
 /* Navbar start */
@@ -65,3 +66,62 @@ body {
     vertical-align: middle;
 }
 /* Landing page content end */
+
+/* Authentication layout start */
+.auth-layout {
+    width: 30%;
+    background: white;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    display: grid;
+    box-shadow: 0 0 4px;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+@media (max-width: 575.98px) {
+    .auth-layout {
+        max-width: 100%;
+        width: 90%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .auth-layout {
+        max-width: 100%;
+        width: 60%;
+    }
+}
+
+.auth-layout form, .auth-layout input {
+    margin: 15px 0;
+    padding: 5px;
+    font-size: 3vh;
+}
+
+.auth-layout input {
+    width: 100%;
+    display: inline-block;
+}
+
+.auth-layout h2, .auth-layout div, #message {
+    text-align: center;
+} 
+
+.auth-layout button {
+    background-color: #263DA7;
+    color: #F1A8A8;
+    border-radius: 10px;
+    border: solid #263DA7;
+    padding: 10px 20px;
+}
+
+.auth-layout button:hover {
+    color: #263DA7;
+    background-color: #F1A8A8;
+    border-radius: 10px;
+    border: solid #F1A8A8;
+    padding: 10px 20px;
+}
+/* Authentication layout end */

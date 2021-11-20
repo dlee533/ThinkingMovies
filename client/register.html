@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ThinkingMovies</title>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Register</title>
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--FontAwesome-->
     <link href="../client/node_modules/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet"/>
     <!--Page styling-->
     <link href="../client/css/style.css" rel="stylesheet" />
-</head>
-<body>
-<div class="container-fluid">
-    <!--Navbar start-->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+  </head>
+  <body>
+    <div>
+      <!--Navbar start-->
+      <nav class="navbar fixed-top navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="./index.html"><i class="fas fa-home"></i></a>
         <button
                 class="navbar-toggler"
@@ -41,17 +39,27 @@
                 </li>
             </ul>
         </div>
-    </nav>
+      </nav>
     <!--Navbar end-->
-    <div class="landing-div container">
-              <span class="landing-content">
-                <h1>ThinkingMovies</h1>
-                <br>
-                <p><i>Thinking about you</i></p>
-              </span>
+    <div class="auth-layout">
+      <h2>Register</h2>
+      <form id="form">
+        <label for="username">Username:</label><br />
+        <input type="text" id="username" name="username"><br />
+
+        <label for="email">Email:</label><br />
+        <input type="text" id="email" name="email"><br />
+
+        <label for="password">Password:</label><br />
+        <input type="text" id="password" name="password"><br />
+
+        <div>
+          <button type="submit">Register</button>
+        </div>
+      </form>
+      <span id="message"></span>
     </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
+    </div>
+    <script src="js/register.js"></script>
+  </body>
 </html>

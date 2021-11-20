@@ -90,7 +90,7 @@ body {
 @media (max-width: 767.98px) {
     .auth-layout {
         max-width: 100%;
-        width: 60%;
+        width: 70%;
     }
 }
 
@@ -107,7 +107,7 @@ body {
 
 .auth-layout h2, .auth-layout div, #message {
     text-align: center;
-} 
+}
 
 .auth-layout button {
     background-color: #263DA7;
@@ -125,3 +125,41 @@ body {
     padding: 10px 20px;
 }
 /* Authentication layout end */
+
+/* Admin page content start */
+.admin-content {
+  height: 80%;
+  width: 50%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background: white;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  display: grid;
+  box-shadow: 0 0 4px;
+  border-radius: 10px;
+  padding: 30px;
+  font-size: 1.8vh;
+}
+
+@media (max-width: 576px) {
+    .admin-content {
+        max-width: 100%;
+        width: 90%;
+        height: 80%;
+        min-height: 50%;
+        font-size: 1vh;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .admin-content {
+        max-width: 100%;
+        width: 90%;
+        height: 80%;
+        min-height: 50%;
+        font-size: 1.6vh;
+    }
+}
+/* Admin page content end */

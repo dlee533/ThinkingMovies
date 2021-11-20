@@ -21,7 +21,7 @@ const loginHandler = (e) => {
           window.localStorage.setItem("uid", res.id);
           window.localStorage.setItem("token", res.token);
           alert(`${res.message}`);
-          // window.location.href = ""; // TODO: redirect to landing page
+          window.location.href = "./index.html";
       } else if (xhttp.readyState == 4) {
           message.textContent  = `Error: ${JSON.parse(xhttp.responseText).message}`;
       }

@@ -40,6 +40,7 @@ const authMiddleware = (req, res, next) => {
   }
 
   const onError = (err) => {
+    console.log(err);
     res.status(403).json({
       success: false,
       message: "jwt verification - " + err.message

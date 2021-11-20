@@ -37,6 +37,8 @@ app.use(resource + '/users', decodeToken);
 
 app.post(resource + '/adminLogin', authController.adminLogin);
 app.get(resource + '/admins/stats', adminController.getStats);
+app.get(resource + '/admins/verify', authController.verifyLogin);
+
 
 app.post(resource + '/userLogin', authController.userLogin);
 app.post(resource + '/register', authController.register);

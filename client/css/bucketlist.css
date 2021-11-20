@@ -28,19 +28,22 @@ form {
     height: 20px;
 }
 
-/* #container {
+#container {
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
     padding: 24px;
+    border-color: cadetblue;
     gap: 24px;
-} */
+    box-shadow: 0 0 4px;
+    opacity: 0.60;
+}
 
 .note {
     height: 200px;
     box-sizing: border-box;
     padding: 16px;
     border-color: cadetblue;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     box-shadow: 0 0 7px (0,0,0,0.15);
     resize: none;
     font-family: sans-serif;
@@ -54,7 +57,7 @@ form {
 .add-note {
     height: 200px;
     outline: none;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     background: (0,0,0,0.1);
     border-color: cadetblue;
     font-size: 80px;
@@ -72,4 +75,13 @@ form {
     border-top-style: none;
     border-left-style: none;
     border-right-style: none;
+}
+
+li:hover {
+    color: blueviolet;
+    cursor: pointer;
+}
+
+li {
+    color: white;
 }

@@ -47,141 +47,14 @@ app.use((err, req, res, next) => {
 
 /**
  * Get both bucketlist and bucketitems from DB
+ * @todo @marooncandy need to grab userId in the url and in define userId in the query
  */
 app.get(resource + '/buckets', (req, res) => {
   const sql = [
-    'SELECT * FROM bucketlist',
-    'SELECT * FROM bucketitem WHERE bucketlist_id IN (SELECT id FROM bucketlist)'
+    'SELECT * FROM bucketlist WHERE user_id = 2',
+    'SELECT * FROM bucketitem WHERE bucketlist_id = 1' 
   ];
   db.query(sql.join(';'), (err, result) => {
-    if (err) {
-      console.log(err);
-      throw err;
-    }
-    res.status(200).send(`${JSON.stringify(result)}`);
-  });
-})
-
-/**
- * Add a bucket item
- */
-app.post(resource + '/buckets/:bucket_id/items', (req, res) => {
-  let body = "";
-  req.on('data', function (chunk) {
-      if (chunk !== null) {
-          body += chunk;
-      }
-  });
- 
-  req.on('end', () => {
-    //@todo change hardcoded bucketlist_id
-      let user_input = JSON.parse(body);
-      let sql = `INSERT INTO bucketitem(name, bucketlist_id) values ('${user_input.name}', 2)`;
-      db.query(sql, (sqlErr, sqlRes) => { 
-          if (sqlErr) {
-              res.status(404).send('There is some error here!');
-              throw err;
-          }
-          res.status(200).send(`${user_input.name} is stored into bucketitem table`);
-      });
-  });
-})
-
-/**
- * Add a bucketlist
- */
- app.post(resource+'/buckets', (req, res) => {
-  let body = "";
-  req.on('data', function (chunk) {
-      if (chunk !== null) {
-          body += chunk;
-      }
-  });
-
-  req.on('end', () => {
-    //@todo change hardcoded user_id
-      let user_input = JSON.parse(body);
-      let sql = `INSERT INTO bucketlist(name, user_id) values ('${user_input.name}', 1)`;
-      db.query(sql, (sqlErr, sqlRes) => { 
-          if (sqlErr) {
-              res.status(404).send('There is some error here!');
-              throw err;
-          }
-          res.status(200).send(`${user_input.name} is stored into bucketlist table`);
-      });
-  });
-})
-
-/**
- * Update bucket item
- */
-app.put(resource + '/buckets/:bucket_id/items/:item_id', (req, res) => {
-  let body = "";
-  req.on('data', function (chunk) {
-      if (chunk !== null) {
-          body += chunk;
-      }
-  });
- 
-  req.on('end', () => {
-    //@todo change hardcoded bucketlist_id
-      let user_input = JSON.parse(body);
-      let sql = `UPDATE bucketitem\ SET name=${user_input.name}\ WHERE bucketlist_id=2`;
-      db.query(sql, (sqlErr, sqlRes) => { 
-          if (sqlErr) {
-              res.status(404).send('There is some error here!');
-              throw err;
-          }
-          res.status(200).send(`${user_input.name} is stored into bucketitem table`);
-      });
-  });
-})
-
-/**
- * Update bucket LIST
- */
- app.put(resource + '/buckets/:bucket_id', (req, res) => {
-  let body = "";
-  req.on('data', function (chunk) {
-      if (chunk !== null) {
-          body += chunk;
-      }
-  });
- 
-  req.on('end', () => {
-    //@todo change hardcoded bucketlist_id
-      let user_input = JSON.parse(body);
-      let sql = `UPDATE bucketlist\ SET name=${user_input.name}\ WHERE user_id=1`;
-      db.query(sql, (sqlErr, sqlRes) => { 
-          if (sqlErr) {
-              res.status(404).send('There is some error here!');
-              throw err;
-          }
-          res.status(200).send(`${user_input.name} is stored into bucketitem table`);
-      });
-  });
-})
-
-/**
- * Delete a bucket item
- */
- app.delete(resource + '/buckets/:bucketlist_id/items/:bucket_item', (req, res) => {
-  const sql = `DELETE FROM bucketitem WHERE id = something`;
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.log(err);
-      throw err;
-    }
-    res.status(200).send(`${JSON.stringify(result)}`);
-  });
-})
-
-/**
- * Delete a bucket LIST
- */
- app.delete(resource + '/buckets/:bucketlist_id', (req, res) => {
-  const sql = `DELETE FROM bucketlist WHERE id = something`;
-  db.query(sql, (err, result) => {
     if (err) {
       console.log(err);
       throw err;

@@ -1,84 +1,65 @@
 const xhttp = new XMLHttpRequest();
-const resource = '/v1/users/bucketlists';
+const resource = '/v1/users';
 const endPointRoot = 'http://localhost:8080';
 const TWO_SEC = 2000;
 const notesContainer = document.getElementById("container");
 // const addNoteBtn = notesContainer.querySelector(".add-note");
+var bucketlist_id = 0;
 
-/*
-@todo @andi work on post/get of bucketlist functions
-*/
+getBuckets().forEach(bucketlist => {
+    const bucketElement = AddBucketElement(bucketlist.id, bucketlist.content);
+    notesContainer.insertBefore(bucketElement, AddBucketElement);
+})
 
-function newItem(content) {
-    if (content == null) {
-        content = '';
-    }
-    let div = document.createElement('div');
-    let checkbox = document.createElement('input');
-    checkbox.setAttribute('type', 'checkbox');
-    let textfield = document.createElement('input');
-    textfield.setAttribute('type', 'text');
-    let data = document.createTextNode(content);
-    textfield.appendChild(data);
-
-    let remove_button = document.createElement("button");
-    let remove_button_name = document.createTextNode("Remove");
-    remove_button.appendChild(remove_button_name);
-
-    div.appendChild(checkbox);
-    div.appendChild(textfield);
-    div.appendChild(remove_button);
-
-    let first_textbox = document.getElementById("parent");
-    first_textbox.appendChild(div);
-
-    remove_button.addEventListener("click", function () {
-        div.remove(); //remove div from DOM
-    });
-}
-
-function addItem() {
-    newItem(null);
-}
-
-function saveNotes(notes) {
-
-}
-
-function updateNote(id, newContent) {
-
-}
-
-function deleteNote(id, element) {
-
-}
-
-// function post() {
-//     let paramsJson = {'username': 'andi', 'email': '123@gmail.com'};
-//     xhttp.open("POST", endPointRoot+resource, true);
-//     xhttp.setRequestHeader('Content-type', 'application/json');
-//     xhttp.send(JSON.stringify(paramsJson)); //sending data
-//     xhttp.onreadystatechange = () => {
-//         if (this.readyState == 4 && this.status == 200) {
-//             document.getElementById("msg").innerHTML = this.responseText;
-//             console.log(this.responseText);
-//         }
-//     };
-// }
-
+/**
+ * Get bucketlists along with bucketitems
+ * @todo @marooncandy have to grab bucketlist and iteams specific to userId
+ */
 function getBuckets() {
-    xhttp.open("GET", endPointRoot + resource, true);
+    xhttp.open("GET", endPointRoot + resource+'/buckets', true);
     xhttp.send();
-    xhttp.onreadystatechange = function () {
+    xhttp.onreadystatechange = () => {
         if (this.readyState == 4 && this.status == 200) {
             let info = JSON.parse(this.responseText);
-            // info.forEach(obj => {
-            //     document.getElementById('msg').innerHTML += `<li style="list-style-type: none;">Bucket List No.${obj.id} Name: ${obj.name}</li>`;
-            // })
-            document.getElementById('msg').innerHTML = JSON.stringify(info);
+            let container = document.getElementById('msg');
             console.log(info);
-        };
+            info.forEach((obj, i) => {
+                obj.forEach(e => {
+                    document.getElementById('msg').innerHTML += `<li>${e.name}</li>`;
+                })
+            });
+            console.log(JSON.stringify(info));
+        }
+        
     }
 }
 
+function AddBucketElement(id, content) {
+    let bucket = document.createElement('textarea');
+    bucket.classList = note;
+    bucket.id = id;
+    bucket.value = content;
+
+    bucket.addEventListener('change', () => {
+        UpdateBucketElement(id, bucket.value);
+    });
+
+    Element.addEventListener('dblclick', () => {
+        const deleteIt = confirm('Are you sure you wanna delete?');
+        if (deleteIt) {
+            deleteBucket(id, element);
+        }
+    })
+
+    return bucket;
+}
+
+function UpdateBucketElement(id, newContent) {
+    console.log('updating bucket...');
+
+}
+
+function deleteBucket(id, content) {
+    console.log('deleting note');
+}
 window.onload = getBuckets();

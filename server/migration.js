@@ -9,7 +9,7 @@ const { encryptPassword } = require('./modules/password');
 // id, user_id, name
 //
 // bucketItems:
-// id, bucketlist_id, name
+// id, bucketlist_id, name 
 
 
 const queryList = [

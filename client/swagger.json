@@ -14,56 +14,120 @@
   "tags": [
     {
       "name": "admins",
-      "description": "Secured Admin-only calls"
+      "description": "Everything about your Pets",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
     },
     {
       "name": "user",
-      "description": "Operations available to regular users"
+      "description": "Operations about user",
     },
     {
-      "name": "bucketlist",
-      "description": "CRUD operations on bucketlist table"
-    },
-    {
-      "name": "bucketitem",
-      "description": "CRUD operations on bucketitem table"
+        "name": "bucketlist",
+        "description": "Operations on bucketlist table"
     }
   ],
   "schemes": [
-    "https://andicloud32.com/documentation.html"
+    "https"
   ],
   "paths": {
-    "/admin/stats": {
+    "/buckets": {
       "get": {
-        "tags": [
-          "admins"
-        ],
-        "summary": "Gets stat infomation",
-        "produces": "application/json",
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          "400": {
-            "description": "add description"
-          },
-          "500": {
-            "description": "Server problem"
-          }
-        }
-      },
-    "/users/buckets": {
-      "post": {
         "tags": [
           "bucketlist"
         ],
-        "summary": "Save bucketlist to user account",
+        "summary": "Get all bucketlists",
+        "description": "",
+        "operationId": "addPet",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Items are displayed successfully"
+          },
+          "500": {
+            "description" : "Server issue"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "pet"
+        ],
+        "summary": "Update an existing pet",
+        "description": "",
+        "operationId": "updatePet",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pet"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/pet/findByStatus": {
+      "get": {
+        "tags": [
+          "pet"
+        ],
+        "summary": "Finds Pets by status",
         "description": "Multiple status values can be provided with comma separated strings",
         "operationId": "findPetsByStatus",
         "produces": [
@@ -116,7 +180,7 @@
     "/pet/findByTags": {
       "get": {
         "tags": [
-          "bucketlist"
+          "pet"
         ],
         "summary": "Finds Pets by tags",
         "description": "Muliple tags can be provided with comma separated strings. Use         tag1, tag2, tag3 for testing.",

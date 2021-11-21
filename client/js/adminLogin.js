@@ -16,7 +16,7 @@ const redirectToAdminPageIfLoggedIn = () => {
   xhttp.send();
   xhttp.onreadystatechange = () => {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
-          window.location.href = "./adminPage.html";
+          window.location.href = "./admin.html";
       }
   };
 }

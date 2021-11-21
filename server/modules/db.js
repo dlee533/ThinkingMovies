@@ -3,9 +3,9 @@ const mysql = require('mysql');
 //Create connection to db
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'bucketlist',
+    user: 'mygadgnt_admin',
+    password: 'movie123',
+    database: 'mygadgnt_bucketlist',
     multipleStatements: true,
 });
 

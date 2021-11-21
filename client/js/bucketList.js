@@ -1,6 +1,6 @@
 const xhttp = new XMLHttpRequest();
 const resource = '/v1/users';
-const endPointRoot = 'http://localhost:8080';
+const endPointRoot = 'https://mygarlicboy.com';
 const TWO_SEC = 2000;
 const notesContainer = document.getElementById("container");
 // const addNoteBtn = notesContainer.querySelector(".add-note");

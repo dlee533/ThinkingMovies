@@ -1,4 +1,4 @@
-const endPointRoot = 'http://localhost:8080/API/v1';
+const endPointRoot = 'https://mygarlicboy.com/API/v1';
 const movieResource="/movies";
 const userResource="/users";
 const bucketResource="/bucketlist";

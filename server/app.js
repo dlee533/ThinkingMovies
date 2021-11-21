@@ -53,11 +53,11 @@ app.use((err, req, res, next) => {
 
 /**
  * Get both bucketlist and bucketitems from DB
- * @todo @marooncandy need to grab userId in the url and in define userId in the query
+ * @todo @marooncandy how to grab userId and bucketlist id?
  */
-app.get(resource + '/buckets', (req, res) => {
+app.get(resource + '/users/:uid/bucketlist', (req, res) => {
   const sql = [
-    'SELECT * FROM bucketlist WHERE user_id = 2',
+    'SELECT * FROM bucketlist WHERE user_id = uid',
     'SELECT * FROM bucketitem WHERE bucketlist_id = 1' 
   ];
   db.query(sql.join(';'), (err, result) => {
@@ -77,17 +77,6 @@ app.post(resource + '/register', authController.register);
 
 app.get(resource + '/movies', movieController.getAllMovies);
 app.post(resource + '/users/:uid/bucketlist/:bid', movieController.addMovies);
-
-app.get(resource +'/bucketlists', (req, res) => {
-  let sql = `SELECT * FROM bucketlist`;
-  db.query(sql, (err, result) => {
-      if (err) {
-          console.log(err);
-          throw err;
-      }
-      res.status(200).send(`${JSON.stringify(result)}`);
-  });
-});
 
 app.get(resource + '/movielists', (req, res) => {
   let sql = `SELECT * FROM bucketlist`;

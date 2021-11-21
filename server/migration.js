@@ -69,8 +69,6 @@ const getAdminInfoSQL = async () => {
   return `INSERT INTO user(username,email,password,isAdmin) VALUE("${admin.username}", "${admin.email}", "${admin.password}", ${admin.isAdmin})`;
 }
 
-
-
 getAdminInfoSQL().then(db.promise)
                  .then(console.log)
                  .catch(console.log);

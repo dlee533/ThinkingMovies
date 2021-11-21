@@ -8,8 +8,6 @@ const message = document.getElementById('message');
 
 const loginHandler = (e) => {
   e.preventDefault();
-
-  const xhttp = new XMLHttpRequest();
   const paramsJson = {'email': email.value, 'password': password.value};
 
   xhttp.open("POST", endPointRoot+resource, true);
@@ -21,7 +19,7 @@ const loginHandler = (e) => {
           window.localStorage.setItem("uid", res.id);
           window.localStorage.setItem("token", res.token);
           alert(`${res.message}`);
-          // window.location.href = ""; // TODO: redirect to landing page
+          window.location.href = './bucketlist.html'; // TODO: redirect to landing page
       } else if (xhttp.readyState == 4) {
           message.textContent  = `Error: ${JSON.parse(xhttp.responseText).message}`;
       }

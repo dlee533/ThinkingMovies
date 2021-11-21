@@ -30,8 +30,10 @@ const addHandler = () => {
 const onClickHandler = (movieId) => {
   return () => {
     if (moviesToAdd.includes(movieId)) {
+      document.getElementById(movieId).className = "movieItem";
       moviesToAdd = moviesToAdd.filter((val) => val!=movieId);
     } else {
+      document.getElementById(movieId).className = "movieItem clicked";
       moviesToAdd.push(movieId);
     }
   }
@@ -48,6 +50,7 @@ const onMount = () => {
           for (let i = 0; i < movies.length; i++) {
             const mItem = document.createElement('div');
             mItem.className = "movieItem";
+            mItem.setAttribute("id", movies[i].id);
             mItem.onclick = onClickHandler(movies[i].id);
 
             const mImg = document.createElement('img');

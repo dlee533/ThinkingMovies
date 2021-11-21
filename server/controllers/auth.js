@@ -70,3 +70,8 @@ exports.register = (req, res, next) => {
                .then(respond)
                .catch(next);
 }
+
+exports.verifyLogin = (req, res, next) => {
+  if (req.decoded.id)
+    res.status(200).json({ success: true });
+}

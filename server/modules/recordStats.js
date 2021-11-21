@@ -1,6 +1,9 @@
 const db = require('../modules/db');
+const endpoint = "/API/v1";
 
 const recordStats = (req, res, next) => {
+  if (!req.path.includes(endpoint)) next();
+
   // check if endpoint exists in config file
   // TODO: put all const endpoints in config file
   const getSQL = `SELECT * FROM stats WHERE method = "${req.method}" AND endpoint = "${req.path}"`;

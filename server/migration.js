@@ -10,6 +10,7 @@ const SALT_WORK_FACTOR = 10;
 //**********************************************************************************************************
 // create tables
 const queryList = [
+  "DROP TABLE IF EXISTS apiKey",
   "DROP TABLE IF EXISTS bucketItem",
   "DROP TABLE IF EXISTS bucketlist",
   "DROP TABLE IF EXISTS user",
@@ -41,8 +42,15 @@ const queryList = [
    PRIMARY KEY(id),\
    FOREIGN KEY (bucketlist_id) REFERENCES bucketlist(id),\
    FOREIGN KEY (item_id) REFERENCES filmItem(id))",
-   "DROP TABLE IF EXISTS stats",
-   "CREATE TABLE stats (\
+  "CREATE TABLE apiKey (\
+   id int(11) AUTO_INCREMENT,\
+   user_id int(11),\
+   apiKey varchar(255),\
+   stat int(11) DEFAULT 0 NOT NULL,\
+   PRIMARY KEY (id),\
+   FOREIGN KEY (user_id) REFERENCES user(id))",
+  "DROP TABLE IF EXISTS stats",
+  "CREATE TABLE stats (\
    id int(11) AUTO_INCREMENT,\
    method varchar(255),\
    endpoint varchar(255),\
@@ -69,9 +77,12 @@ const getAdminInfoSQL = async () => {
   return `INSERT INTO user(username,email,password,isAdmin) VALUE("${admin.username}", "${admin.email}", "${admin.password}", ${admin.isAdmin})`;
 }
 
-
-
+const createAPIKey = (result) => {
+  const apiKey = "123"
+  return db.promise(`INSERT INTO apiKey(user_id, apiKey) VALUES (${result.insertId}, ${apiKey})`);
+}
 getAdminInfoSQL().then(db.promise)
+                 .then(createAPIKey)
                  .then(console.log)
                  .catch(console.log);
 
@@ -81,7 +92,7 @@ axios.get(`${mostPopularMovieEndpoint}${IMDB_API_KEY}`)
      .then((res) => {
        res.data.items.forEach((item, i) => {
          const sql = `INSERT INTO filmItem(title, year, image) VALUES("${item.title}", "${item.year}", "${item.image}")`;
-         db.promise(sql).then(console.log).catch(console.log);
+         db.promise(sql).catch(console.log);
        });
      })
      .catch((error) => {

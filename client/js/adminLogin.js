@@ -8,15 +8,15 @@ const password = document.getElementById('password');
 const message = document.getElementById('message');
 
 const redirectToAdminPageIfLoggedIn = () => {
-  if (!window.localStorage.getItem("adminToken")) return;
+  if (!window.localStorage.getItem("adminAPIKey")) return;
 
   const xhttp = new XMLHttpRequest();
   xhttp.open("GET", endPointRoot+verifyResource, true);
-  xhttp.setRequestHeader('Authorization',`Bearer ${window.localStorage.getItem("adminToken")}`);
+  xhttp.setRequestHeader('Authorization',`Basic ${window.localStorage.getItem("adminAPIKey")}`);
   xhttp.send();
   xhttp.onreadystatechange = () => {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
-          window.location.href = "./adminPage.html";
+          window.location.href = "./admin.html";
       }
   };
 }
@@ -33,7 +33,8 @@ const loginHandler = (e) => {
   xhttp.onreadystatechange = () => {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
           const res = JSON.parse(xhttp.responseText);
-          window.localStorage.setItem("adminToken", res.token);
+          console.log(res);
+          window.localStorage.setItem("adminAPIKey", res.apiKey);
           alert(`${res.message}`);
           window.location.href = "./admin.html";
       } else if (xhttp.readyState == 4) {

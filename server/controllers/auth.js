@@ -7,6 +7,7 @@ const SALT_WORK_FACTOR = 10;
 exports.adminLogin = (req, res, next) => {
 
   const sql = `SELECT * FROM user WHERE username="${req.body.username}" AND isAdmin=1`;
+  console.log(sql);
 
   const checkPassword = async (user) => {
     if (user.length == 0) throw new Error("invalid credential");
@@ -16,15 +17,22 @@ exports.adminLogin = (req, res, next) => {
     return user;
   }
 
-  const respond = (user) => {
+  const getAPIKey = (user) => {
+    const q = `SELECT * FROM apiKey WHERE user_id=${user.id}`;
+    return db.promise(q);
+  }
+
+  const respond = (result) => {
+    console.log(result);
     res.json({
       message: "admin successfully logged in",
-      token: createToken(user),
+      apiKey: result[0].apiKey
     });
   }
 
   db.promise(sql)
     .then(checkPassword)
+    .then(getAPIKey)
     .then(respond)
     .catch(next);
 }
@@ -41,16 +49,22 @@ exports.userLogin = (req, res, next) => {
     return user;
   }
 
-  const respond = (user) => {
+  const getAPIKey = (user) => {
+    const q = `SELECT * FROM apiKey WHERE user_id=${user.id}`;
+    return db.promise(q);
+  }
+
+  const respond = (result) => {
     res.json({
       message: "user successfully logged in",
-      token: createToken(user),
-      id: user.id
+      apiKey: result[0].apiKey,
+      id: result[0].user_id
     });
   }
 
   db.promise(sql)
     .then(checkPassword)
+    .then(getAPIKey)
     .then(respond)
     .catch(next);
 }
@@ -62,16 +76,26 @@ exports.register = (req, res, next) => {
     return sql;
   }
 
+  const createUser = (sql) => {
+    return db.promise(sql)
+  }
+
+  const createAPIKey = (result) => {
+    const apiKey = require("crypto").randomBytes(8).toString('hex');
+    const sql = `INSERT INTO apiKey(user_id, apiKey) VALUES (${result.insertId}, "${apiKey}")`
+    return db.promise(sql)
+  }
+
   const respond = (result) => {
     res.json({ message: "user successfully created" });
   }
 
-  getUserSQL().then(db.promise)
-               .then(respond)
-               .catch(next);
+  getUserSQL().then(createUser)
+              .then(createAPIKey)
+              .then(respond)
+              .catch(next);
 }
 
 exports.verifyLogin = (req, res, next) => {
-  if (req.decoded.id)
-    res.status(200).json({ success: true });
+  res.status(200).json({ success: true });
 }

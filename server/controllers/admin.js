@@ -4,7 +4,7 @@ exports.getStats = (req, res, next) => {
   const sql = `SELECT * FROM stats`;
 
   const respond = (result) => {
-    res.json({stats: result});
+    res.json({ stats: result });
   }
 
   db.promise(sql)

@@ -14,7 +14,7 @@ const addHandler = () => {
   console.log(body);
   const xhttp = new XMLHttpRequest();
   xhttp.open("POST", `${endPointRoot}${userResource}/${window.localStorage.getItem("uid")}${bucketResource}/${bid}`, true);
-  xhttp.setRequestHeader('Authorization',`Bearer ${window.localStorage.getItem("token")}`);
+  xhttp.setRequestHeader('Authorization',`Basic ${window.localStorage.getItem("apiKey")}`);
   xhttp.setRequestHeader('Content-type', 'application/json');
   xhttp.send(JSON.stringify(body));
   xhttp.onreadystatechange = () => {

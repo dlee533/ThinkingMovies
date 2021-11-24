@@ -11,7 +11,7 @@ const adminController = require('./controllers/admin');
 const movieController = require('./controllers/movie');
 
 const createToken = require('./modules/createToken');
-const decodeToken = require('./modules/decodeToken');
+const checkAPIKey = require('./modules/checkAPIKey');
 const errorHandler = require('./modules/errorHandler');
 const recordStats = require('./modules/recordStats');
 
@@ -32,8 +32,8 @@ app.use(function(req, res, next) {
 app.use(recordStats);
 
 // middleware to check Authorization token passed in header
-app.use(resource + '/admins', decodeToken);
-app.use(resource + '/users', decodeToken);
+app.use(resource + '/admins', checkAPIKey);
+app.use(resource + '/users', checkAPIKey);
 
 app.post(resource + '/adminLogin', authController.adminLogin);
 app.get(resource + '/admins/stats', adminController.getStats);

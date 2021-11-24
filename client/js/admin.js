@@ -8,7 +8,7 @@ const loadStats = () => {
   const xhttp = new XMLHttpRequest();
 
   xhttp.open("GET", endPointRoot+resource, true);
-  xhttp.setRequestHeader('Authorization',`Bearer ${window.localStorage.getItem("adminToken")}`);
+  xhttp.setRequestHeader('Authorization',`Basic ${window.localStorage.getItem("adminAPIKey")}`);
   xhttp.send();
   xhttp.onreadystatechange = () => {
       if (xhttp.readyState == 4 && xhttp.status == 200) {

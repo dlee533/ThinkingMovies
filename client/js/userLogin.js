@@ -18,8 +18,9 @@ const loginHandler = (e) => {
   xhttp.onreadystatechange = () => {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
           const res = JSON.parse(xhttp.responseText);
+          console.log(res);
           window.localStorage.setItem("uid", res.id);
-          window.localStorage.setItem("token", res.token);
+          window.localStorage.setItem("apiKey", res.apiKey);
           alert(`${res.message}`);
           window.location.href = "./index.html";
       } else if (xhttp.readyState == 4) {

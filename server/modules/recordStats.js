@@ -3,6 +3,7 @@ const endpoint = "/API/v1";
 
 const recordStats = (req, res, next) => {
   if (!req.path.includes(endpoint)) next();
+  if (req.method === "OPTIONS") next();
 
   // check if endpoint exists in config file
   // TODO: put all const endpoints in config file

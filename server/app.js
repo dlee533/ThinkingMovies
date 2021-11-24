@@ -106,7 +106,7 @@ app.get(resource + '/movielists', (req, res) => {
 /**
  * Post bucketlist titles
  */
-app.post(resource + 'users/:uid/bucketlist', (req, res) => {
+app.post(resource + '/users/:uid/bucketlist', (req, res) => {
   console.log('got inside post before body');
   let body = "";
   req.on('data', function (chunk) {
@@ -114,18 +114,18 @@ app.post(resource + 'users/:uid/bucketlist', (req, res) => {
       body += chunk;
     }
   })
-
   req.on('end', () => {
-    console.log('got inside req.on');
-    let values = JSON.parse(body);
-    console.log(body);
-    let sql = `INSERT INTO bucketlist(name, user_id) values ('${values.name}', ${localStorage.getItem('uid')})`;
+    console.log('req.body.name');
+    console.log(req.body.name);
+    console.log('req.params.uid');
+    console.log(req.params.uid);
+    let sql = `INSERT INTO bucketlist(name, user_id) values ('${req.body.name}', ${req.params.uid})`;
     db.query(sql, (sqlErr, sqlRes) => {
       if (sqlErr) {
         res.status(404).send('There is some error here!');
         throw err;
       }
-      res.status(200).send(`${values.name}:${values.score} was stored in DB`);
+      res.status(200).send(`bucketlist ${req.body.name} is stored in DB`);
     });
   })
 })

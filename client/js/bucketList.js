@@ -82,7 +82,6 @@ function saveBuckets(buckets) {
  * Post bucketlist to DB
  */
 const postBucketlist = () => {
-    console.log('got inside post');
     const container = document.getElementById("container");
     let allBucketTitles = container.querySelectorAll("textarea");
     //console.log(allBucketTitles);
@@ -93,7 +92,7 @@ const postBucketlist = () => {
     }
     console.log(bucketlists);
     /**@todo @marooncandy fix 405 method not allowed error */ 
-    xhttp.open("POST", `API/v1/users/${localStorage.getItem('uid')}/bucketlist`, true);
+    xhttp.open("POST", `http://localhost:8080/API/v1/users/${window.localStorage.getItem("uid")}/bucketlist`, true);
     xhttp.setRequestHeader('Authorization',`Bearer ${window.localStorage.getItem("token")}`);
     xhttp.setRequestHeader('Content-type', 'application/json');
     xhttp.send(JSON.stringify(bucketlists));

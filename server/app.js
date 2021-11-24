@@ -20,27 +20,32 @@ app.use(express.urlencoded({
   extended: false
 }));
 
-// host: "quebec.gendns.com",
-//     user: "andiclou_admin",
-//     password: "movie123",
-//     database: "andiclou_thinking_movies"
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
 
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-
-    // TODO: after deploying the program, set the access-control-allow-origin to exact value and replace below lines with next();
-    if (req.method == "OPTIONS") res.status(200).send();
-    else next();
+  // TODO: after deploying the program, set the access-control-allow-origin to exact value and replace below lines with next();
+  if (req.method == "OPTIONS") res.status(200).send();
+  else next();
 });
 
 // middleware to record every stats
 app.use(recordStats);
 
+//middleware to check if method is working
+app.use((req, res, next) => {
+  console.log('here');
+  console.log(req.originalUrl);
+  console.log(req.method);
+  next();
+})
+
 // middleware to check Authorization token passed in header
 app.use(resource + '/admins', decodeToken);
 app.use(resource + '/users', decodeToken);
+
+app.use(errorHandler);
 
 app.use((err, req, res, next) => {
   console.log(err);
@@ -51,23 +56,30 @@ app.use((err, req, res, next) => {
     });
 })
 
-/**
- * Get both bucketlist and bucketitems from DB
- * @todo @marooncandy how to grab userId and bucketlist id?
- */
-app.get(resource + '/users/:uid/bucketlist', (req, res) => {
-  const sql = [
-    'SELECT * FROM bucketlist WHERE user_id = uid',
-    'SELECT * FROM bucketitem WHERE bucketlist_id = 1' 
-  ];
-  db.query(sql.join(';'), (err, result) => {
+app.get(resource, (req, res) => {
+  const sql = `SELECT * FROM bucketlist WHERE user_id = 2`;
+  db.query(sql, (err, result) => {
     if (err) {
       console.log(err);
       throw err;
     }
     res.status(200).send(`${JSON.stringify(result)}`);
   });
-});
+})
+
+/**
+ * Get both bucketlist titles from db
+ */
+app.get(resource + '/users/:uid/bucketlist', (req , res) => {
+  const sql = `SELECT * FROM bucketlist WHERE user_id = ${localStorage.getItem('uid')}`;
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    res.status(200).send(`${JSON.stringify(result)}`);
+  });
+})
 
 app.post(resource + '/adminLogin', authController.adminLogin);
 app.get(resource + '/admins/stats', adminController.getStats);
@@ -83,26 +95,53 @@ app.post(resource + '/users/:uid/bucketlist/:bid', movieController.addMovies);
 app.get(resource + '/movielists', (req, res) => {
   let sql = `SELECT * FROM bucketlist`;
   db.query(sql, (err, result) => {
-      if (err) {
-          console.log(err);
-          throw err;
-      }
-      res.status(200).send(`${JSON.stringify(result)}`);
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    res.status(200).send(`${JSON.stringify(result)}`);
   });
 });
 
-app.post(resource, (req, res) => {
+/**
+ * Post bucketlist titles
+ */
+app.post(resource + 'users/:uid/bucketlist', (req, res) => {
+  console.log('got inside post before body');
   let body = "";
   req.on('data', function (chunk) {
-      if (chunk !== null) {
-          body += chunk;
-      }
-  });
-})
+    if (chunk !== null) {
+      body += chunk;
+    }
+  })
 
-app.use(errorHandler);
+  req.on('end', () => {
+    console.log('got inside req.on');
+    let values = JSON.parse(body);
+    console.log(body);
+    let sql = `INSERT INTO bucketlist(name, user_id) values ('${values.name}', ${localStorage.getItem('uid')})`;
+    db.query(sql, (sqlErr, sqlRes) => {
+      if (sqlErr) {
+        res.status(404).send('There is some error here!');
+        throw err;
+      }
+      res.status(200).send(`${values.name}:${values.score} was stored in DB`);
+    });
+  })
+})
+// //todo: add delete method. working in progress lol.
+// app.delete(resource + '/users/:uid/bucketlist/:bid', (req, res) => {
+//   let sql =  `DELETE FROM bucketlist WHERE id = ?`;
+//   db.query(sql, [req.params.bid], (err, result) => {
+//     if (err) {
+//       console.log(err);
+//       throw err;
+//     }
+//     res.send(`${JSON.stringify(result)}`);
+//   })
+// })
 
 app.listen(PORT, (err) => {
-    if (err) throw err;
-    console.log("listening to port", PORT);
-});
+  if (err) throw err;
+  console.log("listening to port", PORT);
+})

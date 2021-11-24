@@ -27,4 +27,6 @@ const loginHandler = (e) => {
 }
 
 const form = document.getElementById('form');
-form.addEventListener('submit', loginHandler);
+if (form) {
+    form.addEventListener('submit', loginHandler);
+  }

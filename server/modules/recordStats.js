@@ -21,9 +21,18 @@ const recordStats = (req, res, next) => {
     return db.promise(incrementSQL);
   }
 
+  const incrementAPIKeyStat = (result) => {
+    if (!req.userId) next;
+    else {
+      const incrementSQL = `UPDATE apiKey SET stat=stat+1 WHERE user_id = "${req.userId}"`;
+      return db.promise(incrementSQL);
+    }
+  }
+
   db.promise(getSQL)
     .then(checkStatExists)
     .then(incrementStat)
+    .then(incrementAPIKeyStat)
     .then(result => next());
 
 }

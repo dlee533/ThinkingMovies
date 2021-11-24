@@ -10,7 +10,6 @@ const authController = require('./controllers/auth');
 const adminController = require('./controllers/admin');
 const movieController = require('./controllers/movie');
 
-const createToken = require('./modules/createToken');
 const checkAPIKey = require('./modules/checkAPIKey');
 const errorHandler = require('./modules/errorHandler');
 const recordStats = require('./modules/recordStats');
@@ -28,12 +27,12 @@ app.use(function(req, res, next) {
     else next();
 });
 
-// middleware to record every stats
-app.use(recordStats);
-
 // middleware to check Authorization token passed in header
 app.use(resource + '/admins', checkAPIKey);
 app.use(resource + '/users', checkAPIKey);
+
+// middleware to record every stats
+app.use(recordStats);
 
 app.post(resource + '/adminLogin', authController.adminLogin);
 app.get(resource + '/admins/stats', adminController.getStats);

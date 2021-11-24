@@ -9,7 +9,7 @@ const checkAPIKey = (req, res, next) => {
   const verifyKey = (result) => {
     if (result.length === 0)
       throw new Error("Invalid API Key");
-    req.userId = result.user_id;
+    req.userId = result[0].user_id;
   }
 
   const onError = (err) => {

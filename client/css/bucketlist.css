@@ -66,6 +66,21 @@ form {
     background: rgba(0,0,0,0.2);
 }
 
+
+.save-bucket {
+    border-radius: 10px;
+    position:relative;
+    margin-left: 500px;
+    padding: 3px 10px;
+    background-color: #263DA7;
+    color: #F1A8A8;
+    cursor: pointer;
+}
+
+.save-bucket:hover {
+    background: rgba(0,0,0,0.2);
+}
+
 .textbox{
     border-radius: 0px;
     border-top-style: none;

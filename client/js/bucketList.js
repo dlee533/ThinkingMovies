@@ -6,6 +6,7 @@ const bucketsContainer = document.getElementById("container");
 const userResource="/users";
 const bucketResource="/bucketlist";
 const addBucketButton = bucketsContainer.querySelector(".add-note");
+const saveBucketButton = document.getElementById('save-button');
 let bucket_id = 0;
 
 /**
@@ -27,7 +28,7 @@ let bucket_id = 0;
 
     element.addEventListener("dblclick", () => {
         const doDelete = confirm(
-            "Are you sure you wish to delete this sticky note?"
+            "Are you sure you wish to delete this bucketlist?"
         );
 
         if (doDelete) {
@@ -45,7 +46,16 @@ getBuckets().forEach((obj) => {
     bucketsContainer.insertBefore(bucket, addBucketButton);
 });
 
-addBucketButton.addEventListener("click", () => addBuckets());
+addBucketButton.addEventListener("click", () => {
+    addBuckets();
+    //postBucketlist();
+});
+
+saveBucketButton.addEventListener("click", () => {
+    postBucketlist();
+});
+
+
 
 /**
  * testing in LS
@@ -88,17 +98,17 @@ const postBucketlist = () => {
     let bucketlists = [];
     for (let i = 0; i < allBucketTitles.length; i++) {
         console.log(allBucketTitles[i].value);
-        bucketlists.push(allBucketTitles[i].value);
+        bucketlists.push( { 'name' : allBucketTitles[i].value } );
     }
     console.log(bucketlists);
-    /**@todo @marooncandy fix 405 method not allowed error */ 
-    xhttp.open("POST", `http://localhost:8080/API/v1/users/${window.localStorage.getItem("uid")}/bucketlist`, true);
+    xhttp.open("POST", `${endPointRoot}${userResource}/${window.localStorage.getItem("uid")}${bucketResource}`, true);
     xhttp.setRequestHeader('Authorization',`Bearer ${window.localStorage.getItem("token")}`);
     xhttp.setRequestHeader('Content-type', 'application/json');
     xhttp.send(JSON.stringify(bucketlists));
-
+    console.log(JSON.stringify(bucketlists));
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+            console.log('inside readyState');
             document.getElementById("msg").innerHTML = this.responseText;
             console.log(this.responseText);
         }
@@ -121,8 +131,8 @@ const addBuckets = () => {
     bucketsContainer.insertBefore(bucketElement, addBucketButton);
 
     buckets.push(bucketObj);
-    postBucketlist();
     saveBuckets(buckets);
+    postBucketlist();
 }
 /**
  * Update bucketlist
@@ -148,8 +158,8 @@ const deleteBuckets = (id, element) => {
     bucketsContainer.removeChild(element);
 }
 
-// const deleteBucketfromDB = () => {
+const deleteBucketfromDB = () => {
 
-// }
+}
 
 window.onload = getBucketlist();

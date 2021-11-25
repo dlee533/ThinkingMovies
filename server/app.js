@@ -15,6 +15,7 @@ const decodeToken = require('./modules/decodeToken');
 const errorHandler = require('./modules/errorHandler');
 const recordStats = require('./modules/recordStats');
 
+//middleware to convert into json
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false
@@ -56,21 +57,10 @@ app.use((err, req, res, next) => {
     });
 })
 
-app.get(resource, (req, res) => {
-  const sql = `SELECT * FROM bucketlist WHERE user_id = 2`;
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.log(err);
-      throw err;
-    }
-    res.status(200).send(`${JSON.stringify(result)}`);
-  });
-})
-
 /**
  * Get both bucketlist titles from db
  */
-app.get(resource + '/users/:uid/bucketlist', (req , res) => {
+app.get(resource + '/users/:uid/bucketlist', (req, res) => {
   const sql = `SELECT * FROM bucketlist WHERE user_id = ${localStorage.getItem('uid')}`;
   db.query(sql, (err, result) => {
     if (err) {
@@ -104,42 +94,53 @@ app.get(resource + '/movielists', (req, res) => {
 });
 
 /**
- * Post bucketlist titles
+ * Post request for bucketlist titles
  */
 app.post(resource + '/users/:uid/bucketlist', (req, res) => {
-  console.log('got inside post before body');
-  let body = "";
-  req.on('data', function (chunk) {
-    if (chunk !== null) {
-      body += chunk;
+  const bucketlists = req.body;
+  const userId = req.params.uid;
+  console.log(bucketlists);
+
+  let sql = `INSERT INTO bucketlist(name, user_id) VALUES`;
+  bucketlists.forEach((bucket, i) => {
+    sql += `("${bucket.name}", "${userId}")`;
+    if (i < bucketlists.length-1) {
+      sql += ",";
     }
   })
-  req.on('end', () => {
-    console.log('req.body.name');
-    console.log(req.body.name);
-    console.log('req.params.uid');
-    console.log(req.params.uid);
-    let sql = `INSERT INTO bucketlist(name, user_id) values ('${req.body.name}', ${req.params.uid})`;
-    db.query(sql, (sqlErr, sqlRes) => {
-      if (sqlErr) {
-        res.status(404).send('There is some error here!');
-        throw err;
-      }
-      res.status(200).send(`bucketlist ${req.body.name} is stored in DB`);
-    });
+
+  const respond = (result) => {
+    res.status(200).json({
+      success: true,
+      message: `${JSON.stringify(bucketlists)} were stored in DB`
+    })
+  }
+
+  const onError = (err) => {
+    res.status(404).json({
+      sucess: false,
+      message: err.message
+    })
+  }
+
+  db.promise(sql)
+    .then(respond)
+    .catch(onError);
+})
+//todo: add delete method
+/**
+ * Delete request for specific bucketlist title
+ */
+app.delete(resource + '/users/:uid/bucketlist/:bid', (req, res) => {
+  let sql =  `DELETE FROM bucketlist WHERE id = `;
+  db.query(sql, [req.params.bid], (err, result) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    res.send(`${JSON.stringify(result)}`);
   })
 })
-// //todo: add delete method. working in progress lol.
-// app.delete(resource + '/users/:uid/bucketlist/:bid', (req, res) => {
-//   let sql =  `DELETE FROM bucketlist WHERE id = ?`;
-//   db.query(sql, [req.params.bid], (err, result) => {
-//     if (err) {
-//       console.log(err);
-//       throw err;
-//     }
-//     res.send(`${JSON.stringify(result)}`);
-//   })
-// })
 
 app.listen(PORT, (err) => {
   if (err) throw err;

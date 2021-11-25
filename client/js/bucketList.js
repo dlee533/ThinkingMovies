@@ -1,5 +1,5 @@
 //const xhttp = new XMLHttpRequest();
-//const endPointRoot = 'http://localhost:8080/API/v1';
+const endPointRoot = 'http://localhost:8080/API/v1';
 const domainRoot = 'https://andicloud32.com';
 const TWO_SEC = 2000;
 const bucketsContainer = document.getElementById("container");

@@ -1,79 +1,110 @@
-/**
- * Add a new bucket item when Add button is pressed
- */
-function addItem() {
-    newItem(null);
-}
-/**
- * Render bucket item element dynamically
- * @param {*} content 
- */
-function newItem( content) {
-    if (content == null) {
-        content = '';
+const bucketsResource ="/bucketlists";
+const inputItem = document.getElementById("item-div");
+const parent = document.getElementById("parent");
+const bid = 1; // Update bid
+
+let itemsArray = [];
+let itemsArrayId = 0;
+
+const ListItem = class {
+    constructor(content) {
+        if (!content) {
+            this.content = "";
+            this.bucketlistItemId = null;
+        } else {
+            this.content = content.film_title;
+            this.bucketlistItemId = content.bucketitem_id;
+        }
+        this.id = itemsArrayId++;
+        this.node = inputItem.cloneNode(true);
+        this.node.getElementsByClassName("textbox")[0].value = this.content;
+        this.node.getElementsByClassName("remove-btn")[0].value = this.id;
+        this.node.style.display = "block";
+        this.node.getElementsByClassName("textbox")[0].readOnly = true;
     }
-    let div = document.createElement('div');
-    let checkbox = document.createElement('input');
-    checkbox.setAttribute('type', 'checkbox');
-    let textfield = document.createElement('input');
-    textfield.setAttribute('type', 'text');
-    let data = document.createTextNode(content);
-    textfield.appendChild(data);
-
-    let remove_button = document.createElement("button");
-    let remove_button_name = document.createTextNode("Remove");
-    remove_button.appendChild(remove_button_name);
-
-    div.appendChild(checkbox);
-    div.appendChild(textfield);
-    div.appendChild(remove_button);
-
-    let first_textbox = document.getElementById("parent");
-    first_textbox.appendChild(div);
-
-    remove_button.addEventListener("click", function () {
-        div.remove(); //remove div from DOM
-    });
 }
 
-/**
- * Grab user input and save bucket ITEM into bucketItem table
- * @param {*} item items in bucketlist
- */
- function saveBucketItems(bucketlistId) {
-    let item_name = document.getElementById('name').value;
-    //let bucketlistid = document.getElementById('bucketlist_id').value;
-    if (validate(item_name, bucketlistId)) {
-        let paramsJson = {'name': item_name, 'bucketlist_id': bucketlistId};
-        xhttp.open("POST", endPointRoot + resource + '/buckets/:bucket_id/items', true);
-        xhttp.setRequestHeader('Content-type', 'application/json');
-        xhttp.send(JSON.stringify(paramsJson)); //sending data
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("msg").innerHTML = this.responseText;
-                console.log(this.responseText);
-                // document.getElementById('name').value='';
-                // document.getElementById('score').value='';
+const addItem = (content) => {
+    const item = new ListItem(content);
+    itemsArray.push(item);
+    parent.appendChild(item.node);
+}
+
+const getSelectedBucketlistTitle = () => {
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", `${endPointRoot}${bucketsResource}/${bid}`, true);
+    xhttp.send();
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            const res = JSON.parse(xhttp.responseText);
+            document.getElementById("bucketlistTitle").value = res[0].name;
+        } else if (xhttp.readyState == 4) {
+            alert(`Error: ${JSON.parse(xhttp.responseText).message}`);
+        }
+    }
+}
+
+const getSelectedBucketlist = () => {
+    getSelectedBucketlistTitle(bid);
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", `${endPointRoot}${userResource}/${window.localStorage.getItem("uid")}${bucketResource}/${bid}`, true);
+    xhttp.setRequestHeader('Authorization',`Bearer ${window.localStorage.getItem("token")}`);
+    xhttp.setRequestHeader('Content-type', 'application/json');
+    xhttp.send();
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            const res = JSON.parse(xhttp.responseText);
+            itemsArray = [];
+            for (i in res) {
+                addItem(res[i]);
             }
-        };
+        } else if (xhttp.readyState == 4) {
+            alert(`Error: ${JSON.parse(xhttp.responseText).message}`);
+        }
     }
 }
 
-/**
- * Update bucket ITEM in the DB
- * @param {*} id 
- * @param {*} newContent 
- */
- function updateBucketItem(id, newContent) {
-
+const updateBucketlistTitle = () => {
+    if (bid) {
+        let paramsJson = {'name': document.getElementById("bucketlistTitle").value, 'bucketlist_id': bid};
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("PUT", `${endPointRoot}${bucketsResource}`, true);
+        xhttp.setRequestHeader('Authorization',`Bearer ${window.localStorage.getItem("token")}`);
+        xhttp.setRequestHeader('Content-type', 'application/json');
+        xhttp.send(JSON.stringify(paramsJson));
+        xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                const res = JSON.parse(xhttp.responseText);
+            } else if (xhttp.readyState == 4) {
+                alert(`Error: ${JSON.parse(xhttp.responseText).message}`);
+            }
+        }
+    }
 }
 
-/**
- * Delete bucket ITEM from bucketItem table
- * @param {*} id 
- * @param {*} element 
- */
- function deleteBucketItem(id, element) {
-
+const deleteBucketItem = () => {
+    const element = event.target.parentElement;
+    const nodeId = event.target.value;
+    const itemId = itemsArray.filter(item => item.id == event.target.value)[0].bucketlistItemId;
+    if (itemId) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("DELETE", `${endPointRoot}${bucketsResource}/${bid}/items/${itemId}`, true);
+        xhttp.setRequestHeader('Authorization',`Bearer ${window.localStorage.getItem("token")}`);
+        xhttp.send(null);
+        xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                const res = JSON.parse(xhttp.responseText);
+                element.remove();
+                itemsArray = itemsArray.filter(item => item.id != nodeId);
+            } else if (xhttp.readyState == 4) {
+                alert(`Error: ${JSON.parse(xhttp.responseText).message}`);
+            }
+        }
+    }
 }
 
+const goToMoviesPage = () => {
+    window.location.href = "./movieList.html?bid=" + bid;
+}
+
+getSelectedBucketlist(bid);

@@ -5,33 +5,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--FontAwesome-->
+    <link href="../client/node_modules/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet"/>
+    <!--Page styling-->
+    <link href="../client/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="/client/css/bucketlist.css">
     <title>BucketList</title>
 </head>
 
 <body>
-    <script src="/client/js/bucketList.js"></script>
-    <script src="/client/js/bucketItem.js"></script>
-    <p id="editBucketlist" style="margin: 15px;">Editing a BucketList...</p>
-
-    <form id='form'>
-        <div id='container' class="form-group">
-            <input type="text" class="textbox form-control" id="bucklistTitle" placeholder="Title">
+    <!--Navbar start-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="./index.html"><i class="fas fa-home"></i></a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link mx-4" href="./adminLogin.html">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-4" href="./userLogin.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-4" href="./register.html">Register</a>
+                </li>
+            </ul>
         </div>
-        <div class="form-inline form-group">
-            <input id="searchMovieBox" class="form-control mr-sm-2" type="search" placeholder="Search Movie" aria-label="Search">
-            <!-- @todo how do i make the search bar longer Dx ..? help LOL -->
-            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+    </nav>
+    <!--Navbar end-->
+    <form id='form'>
+        <h2 id="editBucketlist" style="margin: 15px;">Edit bucketlist</h2>
+        <div id='container editBucketlist' class="form-group">
+            <input type="text" class="textbox form-control" id="bucketlistTitle" placeholder="Title">
+            <button class="btn btn-primary my-2 my-sm-0" onclick="updateBucketlistTitle()">Update title</button>
         </div>
         <div id='parent' class="form-inline form-group">
-            <input id='checkbox' class="form-control mr-sm-2 " type="checkbox">
-            <input type="text" class="textbox form-control mr-sm-2" id="movieTitle" placeholder="Enter a Movie Title...">
-            <button class="btn btn-outline-danger" type="button">Remove</button>
+            <div id="item-div" style="display: none">
+                <input type="text" class="textbox form-control mr-sm-2" id="movieTitle" placeholder="Enter a Movie Title...">
+                <button class="btn btn-outline-danger remove-btn" type="button" onclick="deleteBucketItem()">Remove</button>
+            </div>
         </div>
-        <button class="btn btn-outline-success mr-sm-2" type="button" onclick="addItem()">Add</button>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button class="btn btn-outline-success mr-sm-2" type="button" onclick="goToMoviesPage()">Browse and Add Movies</button>
+        <a href="./bucketlist.html"><button type="button" class="btn btn-primary">Back to HomePage</button></a>
     </form>
     </div>
 
@@ -45,6 +73,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+
+    <script src="/client/js/bucketList.js"></script>
+    <script src="/client/js/bucketItem.js"></script>
 </body>
 
 </html>

@@ -81,3 +81,7 @@ li:hover {
 li {
     color: white;
 }
+
+.remove-btn {
+    margin: 5px 30px 5px 0;
+}

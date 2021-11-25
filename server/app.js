@@ -141,6 +141,67 @@ app.post(resource + '/users/:uid/bucketlist', (req, res) => {
 //   })
 // })
 
+/**
+ * Edit bucketlist page - get bucketlist title
+ */
+app.get(resource + '/bucketlists/:bid', (req, res) => {
+  const bucketListId = req.params.bid;
+  let sql = `SELECT bucketlist.name FROM bucketlist WHERE id = ${bucketListId}`;
+  db.query(sql, (err, result) => {
+    if (err) {
+        console.log(err);
+        throw err;
+    }
+    res.status(200).send(`${JSON.stringify(result)}`);
+  });
+});
+
+/**
+ * Edit bucketlist page - get bucketlist items
+ */
+app.get(resource + '/users/:uid/bucketlist/:bid', (req, res) => {
+  const bucketListId = req.params.bid;
+	let sql = `SELECT bucketitem.id AS bucketitem_id, filmitem.title AS film_title FROM bucketitem LEFT JOIN filmitem ON bucketitem.item_id = filmitem.id WHERE bucketitem.bucketlist_id = ${bucketListId};`
+  db.query(sql, (err, result) => {
+    if (err) {
+        console.log(err);
+        throw err;
+    }
+    res.status(200).send(`${JSON.stringify(result)}`);
+  });
+});
+
+/**
+ * Edit bucketlist page - delete bucketlist item
+ */
+app.delete(resource + '/bucketlists/:bid/items/:item_id', (req, res) => {
+  const itemId = req.params.item_id;
+  let sql = `DELETE FROM bucketitem WHERE id = ${itemId};`;
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    res.status(200).send(`${JSON.stringify(result)}`);
+  });
+});
+
+/**
+ * Edit bucketlist page - update bucketlist title
+ */
+app.put(resource + '/bucketlists', (req, res) => {
+  const bucketListId = req.body.bucketlist_id;
+  const name = req.body.name;
+  let sql = `UPDATE bucketlist SET name = "${name}" WHERE id = ${bucketListId};`;
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    res.status(200).send(`${JSON.stringify(result)}`);
+  });
+})
+
 app.listen(PORT, (err) => {
   if (err) throw err;
   console.log("listening to port", PORT);

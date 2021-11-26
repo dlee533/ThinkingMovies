@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--FontAwesome-->
+    <link href="../client/node_modules/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet"/>
     <!--Bootstrap script-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -44,13 +46,10 @@
   <!--Navbar end-->
 
   <div id="bucketLists" class="scrollable">
-    <div class="container">
-      <p id="msg" style="margin: 15px;"></p>
-      <button type="button" class="add-note" id="add-note">+</button>
+        <h1>Bucketlists</h1>
     </div>
-  </div>
-    <div>
-        <button type="button" id="save-button" class="save-bucket">Save</button>
+    <div id="add-button-div">
+        <button type="button" id="add-note" class="add-note">Add new bucketlist</button>
     </div>
     <!--boostrap script-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

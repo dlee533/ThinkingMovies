@@ -4,7 +4,6 @@ const bucketsContainer = document.getElementById("bucketLists");
 const userResource="/users";
 const bucketResource="/buckets";
 const addBucketButton = document.getElementById("add-note");
-const saveBucketButton = document.getElementById('save-button');
 
 const deleteBucket = (ev) => {
   ev.preventDefault();

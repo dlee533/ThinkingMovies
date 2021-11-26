@@ -125,3 +125,21 @@ html, body{
     text-align: center;
   }
 }
+
+#back, #reset:hover, #add:hover {
+  background-color: #263DA7;
+  color: #F1A8A8;
+  border-radius: 10px;
+  border: solid #263DA7;
+  padding: 10px 20px;
+  margin: 10px;
+}
+
+#back:hover, #reset, #add {
+  color: #263DA7;
+  background-color: #F1A8A8;
+  border-radius: 10px;
+  border: solid #F1A8A8;
+  padding: 10px 20px;
+  margin: 10px;
+}

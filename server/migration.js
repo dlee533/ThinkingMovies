@@ -98,3 +98,5 @@ axios.get(`${mostPopularMovieEndpoint}${IMDB_API_KEY}`)
      .catch((error) => {
        console.log(error);
      })
+
+return;

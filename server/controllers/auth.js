@@ -1,5 +1,4 @@
 const db = require('../modules/db');
-const createToken = require('../modules/createToken');
 
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
@@ -7,11 +6,9 @@ const SALT_WORK_FACTOR = 10;
 exports.adminLogin = (req, res, next) => {
 
   const sql = `SELECT * FROM user WHERE username="${req.body.username}" AND isAdmin=1`;
-  console.log(sql);
 
   const checkPassword = async (user) => {
-    if (user.length == 0) throw new Error("invalid credential");
-
+    if (user.length === 0) throw new Error("invalid credential");
     user = user[0];
     if (!await bcrypt.compare(req.body.password, user.password)) throw new Error("incorrect password");
     return user;
@@ -23,7 +20,6 @@ exports.adminLogin = (req, res, next) => {
   }
 
   const respond = (result) => {
-    console.log(result);
     res.json({
       message: "admin successfully logged in",
       apiKey: result[0].apiKey

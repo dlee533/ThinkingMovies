@@ -3,7 +3,6 @@ const db = require('./db');
 const checkAPIKey = (req, res, next) => {
   let apiKey = req.headers.authorization;
   apiKey = (typeof(apiKey) === 'string' && apiKey.split(' ')[0] === 'Basic') ? apiKey.split(' ')[1] : null;
-
   const q = `SELECT * FROM apiKey WHERE apiKey="${apiKey}"`;
 
   const verifyKey = (result) => {

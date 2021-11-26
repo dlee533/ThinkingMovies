@@ -1,6 +1,6 @@
 button:hover {
     cursor: pointer;
-} 
+}
 
 form {
     border-style: solid;
@@ -28,7 +28,7 @@ form {
     height: 20px;
 }
 
-#container {
+.container {
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
     padding: 24px;

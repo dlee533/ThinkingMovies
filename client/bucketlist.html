@@ -8,22 +8,49 @@
     <!--Bootstrap script-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/src/client/css/bucketlist.css">
+    <link rel="stylesheet" href="./css/bucketlist.css">
+    <link rel="stylesheet" href="./css/style.css">
     <title>BucketList Home</title>
 </head>
 
 <body>
-    <script src="/src/client/js/bucketList.js"></script>
-    <p id="msg" style="margin: 15px;">BucketList Home</p>
+  <!--Navbar start-->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="./index.html"><i class="fas fa-home"></i></a>
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link mx-4" href="./adminLogin.html">Admin</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-4" href="./userLogin.html">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-4" href="./register.html">Register</a>
+            </li>
+        </ul>
+    </div>
+  </nav>
+  <!--Navbar end-->
 
-    <div id="container">
-        <textarea class="note">Type something...</textarea>
-        <textarea class="note"></textarea>
-        <textarea class="note"></textarea>
-        <textarea class="note"></textarea>
-        <textarea class="note"></textarea>
-        <button type="button" class="add-note">+</button>
-
+  <div id="bucketLists" class="scrollable">
+    <div class="container">
+      <p id="msg" style="margin: 15px;"></p>
+      <button type="button" class="add-note" id="add-note">+</button>
+    </div>
+  </div>
+    <div>
+        <button type="button" id="save-button" class="save-bucket">Save</button>
     </div>
     <!--boostrap script-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -35,6 +62,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+    <script src="./js/bucketList.js"></script>
 </body>
 
 </html>

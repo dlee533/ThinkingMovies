@@ -1,6 +1,7 @@
 const xhttp = new XMLHttpRequest();
 const endPointRoot = 'http://localhost:8080/API/v1';
 const resource="/userlogin";
+const verifyResource = "/users/verify"
 
 const email = document.getElementById('email');
 const password = document.getElementById('password');
@@ -22,7 +23,7 @@ const loginHandler = (e) => {
           window.localStorage.setItem("uid", res.id);
           window.localStorage.setItem("apiKey", res.apiKey);
           alert(`${res.message}`);
-          window.location.href = "./index.html";
+          window.location.href = "./bucketlist.html";
       } else if (xhttp.readyState == 4) {
           message.textContent  = `Error: ${JSON.parse(xhttp.responseText).message}`;
       }

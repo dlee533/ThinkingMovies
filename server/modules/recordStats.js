@@ -8,6 +8,7 @@ const recordStats = (req, res, next) => {
   // check if endpoint exists in config file
   // TODO: put all const endpoints in config file
   const getSQL = `SELECT * FROM stats WHERE method = "${req.method}" AND endpoint = "${req.path}"`;
+  console.log(`method = "${req.method}" AND endpoint = "${req.path}`);
 
   const checkStatExists = (result) => {
     if (result.length == 1) return result;

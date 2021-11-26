@@ -12,16 +12,10 @@ exports.getAllMovies = (req, res, next) => {
     .catch(next);
 }
 
-exports.addMovies = (req, res, next) => {
+exports.addItem = (req, res, next) => {
   const bucketListId = req.params.bid;
-  const movies = req.body.movies;
-  let sql = `INSERT INTO bucketItem(bucketlist_id, item_id) VALUES`;
-  for (let i=0; i<movies.length; i++) {
-    sql += ` ("${bucketListId}", "${movies[i]}")`;
-    if (i<movies.length-1)
-      sql += ",";
-  }
-  console.log(sql);
+  const film_id = req.body.fid;
+  let sql = `INSERT INTO bucketItem(bucketlist_id, item_id) VALUES(${req.params.bid}, ${req.body.fid})`;
 
   const respond = () => {
     res.json({ success: true });

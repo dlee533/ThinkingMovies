@@ -8,9 +8,9 @@
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--FontAwesome-->
-    <link href="../client/node_modules/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet"/>
+    <link href="./node_modules/@fortawesome/fontawesome-free/css/all.css" rel="stylesheet"/>
     <!--Page styling-->
-    <link href="../client/css/style.css" rel="stylesheet" />
+    <link href="./css/style.css" rel="stylesheet" />
   </head>
   <body>
     <div class="container-fluid mo">
@@ -42,14 +42,15 @@
         </div>
       </nav>
       <!--Navbar end-->
+
       <div class="movieList-div">
         <div class="scrollable movieList" id="movieList"></div>
         <div class="row">
           <div class="left">
-            <button class="btn btn-light">Back to List</button>
+            <button class="btn btn-light" id="back">Back to List</button>
           </div>
           <div class="right">
-            <button class="btn btn-light">Cancel</button>
+            <button class="btn btn-light" id="reset">Reset</button>
             <button id="add" class="btn btn-light">Add</button>
           </div>
         </div>

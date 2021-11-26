@@ -60,15 +60,44 @@ app.use((err, req, res, next) => {
 /**
  * Get both bucketlist titles from db
  */
-app.get(resource + '/users/:uid/bucketlist', (req, res) => {
-  const sql = `SELECT * FROM bucketlist WHERE user_id = ${localStorage.getItem('uid')}`;
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.log(err);
-      throw err;
+app.get(resource + '/users/:uid/bucketlist', (req, res, next) => {
+  // const sql = `SELECT * FROM bucketlist WHERE user_id = ${localStorage.getItem('uid')}`;
+  // db.query(sql, (err, result) => {
+  //   if (err) {
+  //     console.log(err);
+  //     throw err;
+  //   }
+  //   res.status(200).send(`${JSON.stringify(result)}`);
+  // });
+  const sql = `SELECT bucketlist.name,filmitem.title,filmitem.year,filmitem.image \
+               FROM bucketlist \
+               JOIN bucketitem ON bucketlist.id=bucketitem.bucketlist_id \
+               JOIN filmitem ON bucketitem.item_id=filmitem.id \
+               WHERE bucketlist.user_id=2`;
+  const respond = (result) => {
+    const obj = {};
+    for (const [key, value] of Object.entries(result)) {
+      if (obj[value.name]) {
+        obj[value.name].push({
+          title: value.title,
+          year: value.year,
+          image: value.image
+        })
+      } else {
+        obj[value.name] = [{
+          title: value.title,
+          year: value.year,
+          image: value.image
+        }]
+      };
     }
-    res.status(200).send(`${JSON.stringify(result)}`);
-  });
+    res.status(200)
+       .json(obj);
+  }
+
+  db.promise(sql)
+    .then(respond)
+    .catch(next);
 })
 
 app.post(resource + '/adminLogin', authController.adminLogin);

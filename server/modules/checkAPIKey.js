@@ -6,10 +6,17 @@ const checkAPIKey = (req, res, next) => {
   const q = `SELECT * FROM apiKey WHERE apiKey="${apiKey}"`;
 
   const verifyKey = (result) => {
-    if (result.length === 0)
+    const urlArr = req.originalUrl.split('/');
+    let user_id;
+    for (let i = 0; i < urlArr.length; i++) {
+      if (urlArr[i] == "users") {
+        user_id = urlArr[i+1];
+        break;
+      }
+    }
+    if (result.length === 0 || user_id!=result[0].user_id){
       throw new Error("Invalid API Key");
-    if (result[0].user_id !== req.params.uid)
-      throw new Error("Invalid API Key");
+    }
     req.userId = result[0].user_id;
   }
 

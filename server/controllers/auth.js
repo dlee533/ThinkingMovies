@@ -67,8 +67,12 @@ exports.userLogin = (req, res, next) => {
 }
 
 exports.register = (req, res, next) => {
-
   const getUserSQL = async() => {
+    await validateEmail(req.body.email);
+    if (req.password.length < 4)
+      throw new Error('Enter longer password');
+    else if (req.username == "")
+      throw new Error('Enter username');
     const sql = `INSERT INTO user(username, email, password) values("${req.body.username}", "${req.body.email}", "${await bcrypt.hash(req.body.password, SALT_WORK_FACTOR)}")`;
     return sql;
   }
@@ -86,12 +90,11 @@ exports.register = (req, res, next) => {
   const respond = (result) => {
     res.json({ message: "user successfully created" });
   }
-  
-  validateEmail(req.body.email).then(getUserSQL())
-                               .then(createUser)
-                               .then(createAPIKey)
-                               .then(respond)
-                               .catch(next);
+
+  getUserSQL().then(createUser)
+              .then(createAPIKey)
+              .then(respond)
+              .catch(next);
 }
 
 exports.verifyLogin = (req, res, next) => {

@@ -12,7 +12,7 @@ module.exports.validateEmail = async function(email) {
   });
 
   if (!isValid.valid) {
-    throw new Error('Invalid email: ${isValid.reason}`);
+    throw new Error(`Invalid email: ${isValid.reason}`);
   };
 
   return true;

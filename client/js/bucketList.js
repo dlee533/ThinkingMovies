@@ -1,4 +1,4 @@
-const endPointRoot = 'http://localhost:8080/API/v1';
+const endPointRoot = 'https://andicloud32.com/API/v1';
 // const domainRoot = 'https://andicloud32.com';
 const bucketsContainer = document.getElementById("bucketLists");
 const userResource="/users";

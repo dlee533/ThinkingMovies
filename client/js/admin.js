@@ -1,4 +1,4 @@
-const endPointRoot = 'http://localhost:8080/API/v1';
+const endPointRoot = 'https://andicloud32.com/API/v1';
 const resource="/admins/stats";
 const emptyTableMessage = "no stats data";
 

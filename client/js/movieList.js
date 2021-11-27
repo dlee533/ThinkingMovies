@@ -1,4 +1,4 @@
-const endPointRoot = 'http://localhost:8080/API/v1';
+const endPointRoot = 'https://andicloud32.com/API/v1';
 const movieResource="/movies";
 const userResource="/users";
 const bucketResource="/buckets";

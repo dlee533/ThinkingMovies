@@ -13,8 +13,13 @@ const checkAPIKey = (req, res, next) => {
         user_id = urlArr[i+1];
         break;
       }
+      if (urlArr[i] == "admins") {
+        user_id = 1;
+        break;
+      }
     }
-    if (result.length === 0 || user_id!=result[0].user_id){
+    console.log(user_id);
+    if (result.length === 0 || (user_id!=result[0].user_id)){
       throw new Error("Invalid API Key");
     }
     req.userId = result[0].user_id;

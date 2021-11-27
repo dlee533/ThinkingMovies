@@ -15,6 +15,7 @@
     "bcrypt": "^5.0.1",
     "child_process": "^1.0.2",
     "express": "^4.17.1",
+    "deep-email-validator": "^0.1.18",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.14"

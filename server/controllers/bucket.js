@@ -2,10 +2,10 @@ const db = require('../modules/db');
 
 exports.getBucket = (req, res, next) => {
   console.log('getBucket');
-  const sql = `SELECT bucketlist.name,bucketlist.id,filmitem.id as fid,filmitem.title,filmitem.year,filmitem.image \
+  const sql = `SELECT bucketlist.name,bucketlist.id,filmItem.id as fid,filmItem.title,filmItem.year,filmItem.image \
                FROM bucketlist \
-               LEFT JOIN bucketitem ON bucketlist.id=bucketitem.bucketlist_id \
-               LEFT JOIN filmitem ON bucketitem.item_id=filmitem.id \
+               LEFT JOIN bucketItem ON bucketlist.id=bucketItem.bucketlist_id \
+               LEFT JOIN filmItem ON bucketItem.item_id=filmItem.id \
                WHERE bucketlist.user_id=${req.params.uid}\
                AND bucketlist.id=${req.params.bid}`;
 
@@ -53,10 +53,10 @@ exports.createBucket = (req, res, next) => {
 }
 
 exports.getAllBuckets = (req, res, next) => {
-  const sql = `SELECT bucketlist.name,bucketlist.id,filmitem.id as fid,filmitem.title,filmitem.year,filmitem.image \
+  const sql = `SELECT bucketlist.name,bucketlist.id,filmItem.id as fid,filmItem.title,filmItem.year,filmItem.image \
                FROM bucketlist \
-               LEFT JOIN bucketitem ON bucketlist.id=bucketitem.bucketlist_id \
-               LEFT JOIN filmitem ON bucketitem.item_id=filmitem.id \
+               LEFT JOIN bucketItem ON bucketlist.id=bucketItem.bucketlist_id \
+               LEFT JOIN filmItem ON bucketItem.item_id=filmItem.id \
                WHERE bucketlist.user_id=${req.params.uid}`;
 
   const respond = (result) => {
@@ -93,7 +93,7 @@ exports.getAllBuckets = (req, res, next) => {
 
 
 exports.deleteBucket = (req, res, next) => {
-  const sqlItem = `DELETE FROM bucketitem WHERE bucketlist_id=${req.params.bid};`;
+  const sqlItem = `DELETE FROM bucketItem WHERE bucketlist_id=${req.params.bid};`;
   const sqlList = `DELETE FROM bucketlist WHERE id=${req.params.bid};`;
 
   const respond = (result) => {
@@ -141,7 +141,7 @@ exports.updateBucketName = (req, res, next) => {
 }
 
 exports.deleteItem = (req, res, next) => {
-  const sql = `DELETE FROM bucketitem WHERE bucketlist_id=${req.params.bid} AND item_id=${req.params.iid};`;
+  const sql = `DELETE FROM bucketItem WHERE bucketlist_id=${req.params.bid} AND item_id=${req.params.iid};`;
   console.log(sql);
 
   const respond = (result) => {

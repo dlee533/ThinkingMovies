@@ -1,4 +1,5 @@
 const db = require('../modules/db');
+const { validateEmail } = require('../modules/validateEmail');
 
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
@@ -85,11 +86,12 @@ exports.register = (req, res, next) => {
   const respond = (result) => {
     res.json({ message: "user successfully created" });
   }
-
-  getUserSQL().then(createUser)
-              .then(createAPIKey)
-              .then(respond)
-              .catch(next);
+  
+  validateEmail(req.body.email).then(getUserSQL())
+                               .then(createUser)
+                               .then(createAPIKey)
+                               .then(respond)
+                               .catch(next);
 }
 
 exports.verifyLogin = (req, res, next) => {

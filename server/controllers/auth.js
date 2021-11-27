@@ -1,4 +1,5 @@
 const db = require('../modules/db');
+const { validateEmail } = require('../modules/validateEmail');
 
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
@@ -79,10 +80,12 @@ exports.userLogin = (req, res, next) => {
 }
 
 exports.register = (req, res, next) => {
-  // if (validate(req.body.email)) {
-    
-  // }
   const getUserSQL = async() => {
+    await validateEmail(req.body.email);
+    if (req.password.length < 4)
+      throw new Error('Enter longer password');
+    else if (req.username == "")
+      throw new Error('Enter username');
     const sql = `INSERT INTO user(username, email, password) values("${req.body.username}", "${req.body.email}", "${await bcrypt.hash(req.body.password, SALT_WORK_FACTOR)}")`;
     return sql;
   }

@@ -4,19 +4,6 @@ const { validateEmail } = require('../modules/validateEmail');
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
 
-const validate = (email) => {
-  let valid = regex.test(email);
-  if (!valid) {
-      alert("Please enter a valid email format: xxx@yyy.zzz");
-      return false;
-  }
-  if (email == "") {
-      alert("Please enter an email address!");
-      return false;
-  }
-  return true;
-}
-
 exports.adminLogin = (req, res, next) => {
 
   const sql = `SELECT * FROM user WHERE username="${req.body.username}" AND isAdmin=1`;

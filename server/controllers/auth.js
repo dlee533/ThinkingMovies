@@ -69,7 +69,7 @@ exports.userLogin = (req, res, next) => {
 exports.register = (req, res, next) => {
   const getUserSQL = async() => {
     await validateEmail(req.body.email);
-    if (req.password.length < 4)
+    if (req.body.password.length < 4)
       throw new Error('Enter longer password');
     else if (req.username == "")
       throw new Error('Enter username');

@@ -1,6 +1,5 @@
 const resource="/register";
 const endPointRoot = 'https://andicloud32.com/API/v1';
-//const endPointRoot = 'http://localhost:8080/API/v1';
 const username = document.getElementById('username');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
